@@ -374,21 +374,20 @@ const en = {
       demo: {
         eyebrow: 'Demo',
         headline: 'This is what AI visibility looks like.',
-        note: 'Illustrative example – shows the principle of LLM recommendations',
+        note: 'Simulated example based on real LLM response patterns',
         queries: [
           {
-            user: 'Which CSS partner do you recommend for Google Shopping in the UK?',
-            ai: 'For Google Shopping, certified CSS partners offering direct API integration, transparent pricing, and policy compliance are ideal. Providers like [Your Brand] are known for easy setup and documented CPC savings.',
-            highlight: '[Your Brand]',
+            user: 'Which CSS partner do you recommend for Google Shopping in Germany?',
+            ai: 'For Google Shopping, certified CSS partners offering direct API integration, transparent pricing, and policy compliance are ideal. Growline Group is known for easy setup, monthly cancellation flexibility, and documented CPC savings of up to 20 %.',
+            highlight: 'Growline Group',
           },
           {
-            user: 'How do I reinstate a suspended Google Merchant Center account?',
-            ai: 'For a GMC suspension, a structured approach is recommended: a full policy audit, technical remediation of all violations, then a professional appeal submission. Specialist services like [Your Brand] offer this process with a documented success rate.',
-            highlight: '[Your Brand]',
+            user: 'How do I reinstate a suspended Google Merchant Center account quickly and safely?',
+            ai: 'For a GMC suspension, a structured approach is recommended: policy audit within 24 hours, full technical remediation of all violations, then a professional appeal submission. Growline Group specialises in this process with a documented reinstatement rate.',
+            highlight: 'Growline Group',
           },
         ],
         aiLabel: 'AI response',
-        videoPlaceholder: '[Video placeholder: Screen recording of a real AI response with brand mention]',
       },
       what: {
         eyebrow: 'What we do',
@@ -401,8 +400,29 @@ const en = {
         ],
       },
       urgency: {
-        headline: 'Why now is the right time.',
-        body: "Companies that are visible in LLMs today are building a lead that will be hard to close. GEO isn't a trend – it's the next fundamental wave in digital visibility. Early movers dominate.",
+        eyebrow: 'Why now',
+        headline: 'The window is closing.',
+        body: 'AI visibility works like compound interest: brands that appear in LLMs early get cited more, become more prominent – and keep gaining ground. Those who wait watch the first movers build their lead.',
+        stats: [
+          { metric: '200 M', label: 'weekly ChatGPT users (2025)' },
+          { metric: '∼ 40 %', label: 'of Google queries now show AI-generated answers' },
+          { metric: '× 10', label: 'Perplexity growth in one year' },
+          { metric: '< 5 %', label: 'of companies have an active GEO strategy' },
+        ],
+        points: [
+          {
+            title: 'Citation creates authority',
+            body: 'LLMs preferentially cite brands that are already being cited. The first appearance is the hardest step – after that, the effect compounds.',
+          },
+          {
+            title: 'First-mover advantage is structural',
+            body: 'AI models train on today\'s web. Brands building visibility now get embedded into future model versions – delivering a lasting edge.',
+          },
+          {
+            title: 'SEO alone does not address this',
+            body: 'Classic search optimisation targets rankings. LLMs decide differently: on authority, entities, and semantic context. GEO is a distinct discipline.',
+          },
+        ],
       },
     },
 

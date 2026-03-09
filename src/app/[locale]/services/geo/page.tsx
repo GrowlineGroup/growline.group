@@ -130,13 +130,6 @@ export default async function GeoPage({
               );
             })}
 
-            <FadeIn delay={300}>
-              <div className="mt-4 flex aspect-video w-full items-center justify-center rounded-2xl border border-dashed border-zinc-700 bg-zinc-900/60">
-                <span className="px-6 text-center text-sm text-zinc-600">
-                  {p.demo.videoPlaceholder}
-                </span>
-              </div>
-            </FadeIn>
           </div>
         </Container>
       </section>
@@ -169,7 +162,8 @@ export default async function GeoPage({
       <section className="bg-zinc-950 py-24">
         <Container>
           <FadeIn>
-            <div className="mx-auto max-w-2xl flex flex-col gap-6">
+            <div className="flex flex-col gap-4 mb-14 max-w-2xl">
+              <Badge variant="light">{p.urgency.eyebrow}</Badge>
               <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
                 <span className="block bg-gradient-to-r from-emerald-300 to-teal-300 bg-clip-text text-transparent">
                   {p.urgency.headline}
@@ -178,6 +172,35 @@ export default async function GeoPage({
               <p className="text-base leading-relaxed text-zinc-400">{p.urgency.body}</p>
             </div>
           </FadeIn>
+
+          {/* Stats */}
+          <div className="grid grid-cols-2 gap-6 mb-14 md:grid-cols-4">
+            {p.urgency.stats.map((stat, i) => (
+              <FadeIn key={stat.label} delay={i * 80}>
+                <div className="flex flex-col gap-1 rounded-2xl border border-zinc-800 bg-zinc-900 p-5">
+                  <span className="font-mono text-2xl font-bold text-emerald-400 sm:text-3xl">
+                    {stat.metric}
+                  </span>
+                  <span className="text-xs leading-snug text-zinc-500">{stat.label}</span>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+
+          {/* Reason cards */}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            {p.urgency.points.map((point, i) => (
+              <FadeIn key={point.title} delay={i * 80}>
+                <div className="flex flex-col gap-3 rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6 h-full">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full border border-emerald-500/30 bg-emerald-500/10">
+                    <span className="text-xs font-bold text-emerald-400">{i + 1}</span>
+                  </div>
+                  <h3 className="text-sm font-semibold text-white">{point.title}</h3>
+                  <p className="text-sm leading-relaxed text-zinc-400">{point.body}</p>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
         </Container>
       </section>
 

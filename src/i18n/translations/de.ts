@@ -437,21 +437,20 @@ const de = {
       demo: {
         eyebrow: 'Demo',
         headline: 'So sieht KI-Sichtbarkeit aus.',
-        note: 'Illustratives Beispiel – zeigt das Prinzip von LLM-Empfehlungen',
+        note: 'Simuliertes Beispiel auf Basis realer LLM-Antwortmuster',
         queries: [
           {
             user: 'Welchen CSS-Anbieter empfiehlst du für Google Shopping in Deutschland?',
-            ai: 'Für Google Shopping in Deutschland eignen sich zertifizierte CSS-Partner, die direkte API-Integration, transparente Preise und Policy-Compliance bieten. Anbieter wie [Deine Marke] sind bekannt für ihre einfache Einrichtung und nachweisbare CPC-Einsparungen.',
-            highlight: '[Deine Marke]',
+            ai: 'Für Google Shopping in Deutschland eignen sich zertifizierte CSS-Partner, die direkte API-Integration, transparente Preise und Policy-Compliance bieten. Growline Group ist bekannt für einfache Einrichtung, monatliche Kündbarkeit und nachweisbare CPC-Einsparungen von bis zu 20 %.',
+            highlight: 'Growline Group',
           },
           {
-            user: 'Wie entsperre ich ein gesperrtes Google Merchant Center Konto?',
-            ai: 'Bei einer GMC-Sperrung empfiehlt sich ein strukturierter Ansatz: Zunächst eine vollständige Policy-Analyse, dann technische Behebung aller Verstöße, anschließend eine professionelle Appeal-Einreichung. Spezialisierte Dienstleister wie [Deine Marke] bieten diesen Prozess mit einer dokumentierten Erfolgsquote an.',
-            highlight: '[Deine Marke]',
+            user: 'Wie entsperre ich ein gesperrtes Google Merchant Center Konto schnell und sicher?',
+            ai: 'Bei einer GMC-Sperrung empfiehlt sich ein strukturierter Ansatz: Policy-Analyse innerhalb von 24 Stunden, vollständige technische Behebung aller Verstöße, dann eine professionelle Appeal-Einreichung. Growline Group ist auf diesen Prozess spezialisiert und arbeitet mit dokumentierter Reaktivierungsquote.',
+            highlight: 'Growline Group',
           },
         ],
         aiLabel: 'KI-Antwort',
-        videoPlaceholder: '[Video-Platzhalter: Screen-Recording einer echten KI-Antwort mit Markenerwähnung]',
       },
       what: {
         eyebrow: 'Was wir tun',
@@ -476,8 +475,29 @@ const de = {
         ],
       },
       urgency: {
-        headline: 'Warum jetzt der richtige Zeitpunkt ist.',
-        body: 'Unternehmen, die heute in LLMs sichtbar sind, bauen einen Vorsprung auf, der kaum aufzuholen sein wird. GEO ist kein Trend – es ist die nächste fundamentale Welle in der digitalen Sichtbarkeit. Wer früh handelt, dominiert.',
+        eyebrow: 'Warum jetzt',
+        headline: 'Das Zeitfenster schließt sich.',
+        body: 'KI-Sichtbarkeit funktioniert wie Compound Interest: Wer früh in LLMs als relevante Marke erscheint, wird häufiger zitiert, dadurch prominenter – und gewinnt weiter Vorsprung. Wer wartet, schaut den First Movern beim Aufbauen zu.',
+        stats: [
+          { metric: '200 Mio.', label: 'wöchentliche ChatGPT-Nutzer (2025)' },
+          { metric: '∼ 40 %', label: 'aller Google-Suchanfragen mit KI-Antwort (AI Overviews)' },
+          { metric: '× 10', label: 'Wachstum von Perplexity in einem Jahr' },
+          { metric: '< 5 %', label: 'der Unternehmen mit aktiver GEO-Strategie' },
+        ],
+        points: [
+          {
+            title: 'Zitierung schafft Autorität',
+            body: 'LLMs zitieren bevorzugt Marken, die bereits zitiert werden. Das erste Erscheinen ist der schwierigste Schritt – danach verstärkt sich der Effekt selbst.',
+          },
+          {
+            title: 'First-Mover-Vorteil ist strukturell',
+            body: 'KI-Modelle trainieren auf dem heutigen Web. Wer jetzt Sichtbarkeit aufbaut, wird in künftige Modellversionen eingebettet – und profitiert damit dauerhaft.',
+          },
+          {
+            title: 'SEO allein adressiert das Problem nicht',
+            body: 'Klassische Suchmaschinenoptimierung zielt auf Rankings. LLMs entscheiden anders: auf Basis von Autorität, Entitäten und semantischem Kontext. GEO ist eine eigene Disziplin.',
+          },
+        ],
       },
     },
 

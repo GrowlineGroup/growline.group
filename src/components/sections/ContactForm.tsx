@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import type { ContactPayload, ContactTag } from '@/app/api/contact/route';
 
 type Tags = {
   css: string;
@@ -55,39 +56,74 @@ interface Props {
 const inputClass =
   'w-full rounded-xl border border-zinc-100 bg-zinc-50 px-4 py-3 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-colors';
 
-export function ContactForm({
-  form,
-  contactEmail,
-  responseTime,
-  alternativeHeadline,
-  availabilityLabel,
-  availabilityBody,
-}: Props) {
-  const [selectedTags, setSelectedTags] = useState<(keyof Tags)[]>([]);
-  const [submitted, setSubmitted] = useState(false);
+type Status = 'idle' | 'loading' | 'success' | 'error';
 
-  function toggleTag(tag: keyof Tags) {
+export function ContactForm({ form }: Props) {
+  const [selectedTags, setSelectedTags] = useState<ContactTag[]>([]);
+  const [status, setStatus] = useState<Status>('idle');
+  const [errorMsg, setErrorMsg] = useState('');
+
+  function toggleTag(tag: ContactTag) {
     setSelectedTags((prev) =>
       prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag],
     );
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSubmitted(true);
+    setStatus('loading');
+    setErrorMsg('');
+
+    const fd = new FormData(e.currentTarget);
+    const get = (key: string) => (fd.get(key) as string | null) ?? '';
+
+    const payload: ContactPayload = {
+      name: get('name'),
+      company: get('company') || undefined,
+      email: get('email'),
+      whatsapp: get('whatsapp') || undefined,
+      tags: selectedTags,
+      merchantId: get('merchantId') || undefined,
+      domain: get('domain') || undefined,
+      collaboratorCode: get('collaboratorCode') || undefined,
+      websiteUrl: get('websiteUrl') || undefined,
+      geoUrl: get('geoUrl') || undefined,
+      geoService: get('geoService') || undefined,
+      geoCity: get('geoCity') || undefined,
+      message: get('message'),
+      gdpr: fd.get('gdpr') === 'on',
+    };
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.error ?? 'Submission failed');
+      }
+      setStatus('success');
+    } catch (err) {
+      setErrorMsg(err instanceof Error ? err.message : 'Unknown error');
+      setStatus('error');
+    }
   }
 
-  if (submitted) {
+  if (status === 'success') {
     return (
       <div className="flex flex-col gap-4 rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-8">
         <div className="flex items-center gap-2">
           <span className="flex h-2 w-2 rounded-full bg-emerald-400" />
-          <span className="text-sm font-medium text-emerald-600">{form.successHeadline}</span>
+          <span className="text-sm font-semibold text-emerald-700">{form.successHeadline}</span>
         </div>
         <p className="text-sm leading-relaxed text-zinc-600">{form.successBody}</p>
       </div>
     );
   }
+
+  const isLoading = status === 'loading';
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-6">
@@ -101,6 +137,7 @@ export function ContactForm({
           name="name"
           type="text"
           required
+          disabled={isLoading}
           placeholder={form.namePlaceholder}
           className={inputClass}
         />
@@ -115,6 +152,7 @@ export function ContactForm({
           id="company"
           name="company"
           type="text"
+          disabled={isLoading}
           placeholder={form.companyPlaceholder}
           className={inputClass}
         />
@@ -130,6 +168,7 @@ export function ContactForm({
           name="email"
           type="email"
           required
+          disabled={isLoading}
           placeholder={form.emailPlaceholder}
           className={inputClass}
         />
@@ -144,6 +183,7 @@ export function ContactForm({
           id="whatsapp"
           name="whatsapp"
           type="tel"
+          disabled={isLoading}
           placeholder={form.whatsappPlaceholder}
           className={inputClass}
         />
@@ -156,10 +196,11 @@ export function ContactForm({
           <p className="text-xs text-zinc-400">{form.tagHint}</p>
         </div>
         <div className="flex flex-wrap gap-2">
-          {(Object.keys(form.tags) as (keyof Tags)[]).map((tag) => (
+          {(Object.keys(form.tags) as ContactTag[]).map((tag) => (
             <button
               key={tag}
               type="button"
+              disabled={isLoading}
               onClick={() => toggleTag(tag)}
               className={`inline-flex items-center rounded-full border px-3 py-1.5 text-xs font-medium transition-colors ${
                 selectedTags.includes(tag)
@@ -184,6 +225,7 @@ export function ContactForm({
               id="merchantId"
               name="merchantId"
               type="text"
+              disabled={isLoading}
               placeholder={form.merchantIdPlaceholder}
               className={inputClass}
             />
@@ -196,6 +238,7 @@ export function ContactForm({
               id="domain"
               name="domain"
               type="text"
+              disabled={isLoading}
               placeholder={form.domainPlaceholder}
               className={inputClass}
             />
@@ -208,6 +251,7 @@ export function ContactForm({
               id="collaboratorCode"
               name="collaboratorCode"
               type="text"
+              disabled={isLoading}
               placeholder={form.collaboratorCodePlaceholder}
               className={inputClass}
             />
@@ -225,6 +269,7 @@ export function ContactForm({
             id="websiteUrl"
             name="websiteUrl"
             type="url"
+            disabled={isLoading}
             placeholder={form.websiteUrlPlaceholder}
             className={inputClass}
           />
@@ -242,6 +287,7 @@ export function ContactForm({
               id="geoUrl"
               name="geoUrl"
               type="url"
+              disabled={isLoading}
               placeholder={form.geoUrlPlaceholder}
               className={inputClass}
             />
@@ -254,6 +300,7 @@ export function ContactForm({
               id="geoService"
               name="geoService"
               type="text"
+              disabled={isLoading}
               placeholder={form.geoServicePlaceholder}
               className={inputClass}
             />
@@ -266,6 +313,7 @@ export function ContactForm({
               id="geoCity"
               name="geoCity"
               type="text"
+              disabled={isLoading}
               placeholder={form.geoCityPlaceholder}
               className={inputClass}
             />
@@ -283,6 +331,7 @@ export function ContactForm({
           name="message"
           rows={5}
           required
+          disabled={isLoading}
           placeholder={form.messagePlaceholder}
           className="w-full resize-none rounded-xl border border-zinc-100 bg-zinc-50 px-4 py-3 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-colors"
         />
@@ -295,6 +344,7 @@ export function ContactForm({
           name="gdpr"
           type="checkbox"
           required
+          disabled={isLoading}
           className="mt-0.5 h-4 w-4 shrink-0 rounded border-zinc-300 text-emerald-500 focus:ring-emerald-500"
         />
         <label htmlFor="gdpr" className="text-xs leading-relaxed text-zinc-500">
@@ -302,11 +352,36 @@ export function ContactForm({
         </label>
       </div>
 
+      {/* Error */}
+      {status === 'error' && (
+        <p className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-xs text-red-600">
+          {errorMsg}
+        </p>
+      )}
+
       {/* Submit */}
       <button
         type="submit"
-        className="inline-flex w-full items-center justify-center rounded-full bg-emerald-600 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-500"
+        disabled={isLoading}
+        className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-emerald-600 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-500 disabled:cursor-not-allowed disabled:opacity-60"
       >
+        {isLoading && (
+          <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none">
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            />
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+            />
+          </svg>
+        )}
         {form.submit}
       </button>
     </form>
