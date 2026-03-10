@@ -84,7 +84,7 @@ export default async function KontaktPage({
       </section>
 
       {/* ── Form + Info ───────────────────────────────────── */}
-      <section className="bg-white py-20">
+      <section className="bg-white pt-12 pb-20">
         <Container>
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-5 lg:gap-16">
 
