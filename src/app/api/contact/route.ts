@@ -14,13 +14,10 @@ export interface ContactPayload {
   // CSS-specific
   cssMerchantId?: string;
   // GMC-specific
-  merchantId?: string;
-  domain?: string;
   collaboratorCode?: string;
-  // WebDev-specific
-  websiteUrl?: string;
+  // Shared URL (GMC / WebDev / GEO)
+  siteUrl?: string;
   // GEO-specific
-  geoUrl?: string;
   geoService?: string;
   geoCity?: string;
   // Common
@@ -72,6 +69,11 @@ function validate(data: unknown): ContactPayload {
     throw new Error('Invalid Merchant Center ID');
   }
 
+  const collaboratorCode = str(d.collaboratorCode, 4);
+  if (collaboratorCode !== undefined && !/^[0-9]{4}$/.test(collaboratorCode)) {
+    throw new Error('Invalid Collaborator Code');
+  }
+
   return {
     name,
     email,
@@ -81,11 +83,8 @@ function validate(data: unknown): ContactPayload {
     company: str(d.company, MAX.company),
     whatsapp: str(d.whatsapp, MAX.whatsapp),
     cssMerchantId,
-    merchantId: str(d.merchantId, 20),
-    domain: str(d.domain, 253),
-    collaboratorCode: str(d.collaboratorCode, 20),
-    websiteUrl: str(d.websiteUrl, 2048),
-    geoUrl: str(d.geoUrl, 2048),
+    collaboratorCode,
+    siteUrl: str(d.siteUrl, 2048),
     geoService: str(d.geoService, 200),
     geoCity: str(d.geoCity, 100),
   };
@@ -125,11 +124,8 @@ function buildHtml(p: ContactPayload): string {
         ${row('WhatsApp', p.whatsapp)}
         ${row('Leistungen', tags)}
         ${row('CSS Merchant ID', p.cssMerchantId)}
-        ${row('Merchant ID', p.merchantId)}
-        ${row('Domain', p.domain)}
-        ${row('Collaborator Code', p.collaboratorCode)}
-        ${row('Website-URL', p.websiteUrl)}
-        ${row('GEO-URL', p.geoUrl)}
+        ${row('Website / Shop-URL', p.siteUrl)}
+        ${row('Shopify Collaborator Code', p.collaboratorCode)}
         ${row('Branche', p.geoService)}
         ${row('Zielregion', p.geoCity)}
       </table>
