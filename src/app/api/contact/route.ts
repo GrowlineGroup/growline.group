@@ -11,11 +11,13 @@ export interface ContactPayload {
   email: string;
   whatsapp?: string;
   tags: ContactTag[];
+  // CSS-specific
+  cssMerchantId?: string;
   // GMC-specific
   merchantId?: string;
   domain?: string;
   collaboratorCode?: string;
-  // CSS / WebDev-specific
+  // WebDev-specific
   websiteUrl?: string;
   // GEO-specific
   geoUrl?: string;
@@ -65,6 +67,11 @@ function validate(data: unknown): ContactPayload {
     return trimmed.length > 0 && trimmed.length <= max ? trimmed : undefined;
   };
 
+  const cssMerchantId = str(d.cssMerchantId, 10);
+  if (cssMerchantId !== undefined && !/^[0-9]{10}$/.test(cssMerchantId)) {
+    throw new Error('Invalid Merchant Center ID');
+  }
+
   return {
     name,
     email,
@@ -73,6 +80,7 @@ function validate(data: unknown): ContactPayload {
     tags,
     company: str(d.company, MAX.company),
     whatsapp: str(d.whatsapp, MAX.whatsapp),
+    cssMerchantId,
     merchantId: str(d.merchantId, 20),
     domain: str(d.domain, 253),
     collaboratorCode: str(d.collaboratorCode, 20),
@@ -116,6 +124,7 @@ function buildHtml(p: ContactPayload): string {
         ${row('E-Mail', p.email)}
         ${row('WhatsApp', p.whatsapp)}
         ${row('Leistungen', tags)}
+        ${row('CSS Merchant ID', p.cssMerchantId)}
         ${row('Merchant ID', p.merchantId)}
         ${row('Domain', p.domain)}
         ${row('Collaborator Code', p.collaboratorCode)}

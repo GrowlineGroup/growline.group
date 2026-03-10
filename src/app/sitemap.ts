@@ -2,8 +2,16 @@ import { MetadataRoute } from 'next';
 import { locales } from '@/i18n/config';
 import { baseUrl } from '@/lib/config';
 
-// Add new page paths here as the site grows
-const pages = [''];
+const pages = [
+  '',
+  '/kontakt',
+  '/impressum',
+  '/datenschutz',
+  '/services/css-entry',
+  '/services/google-merchant',
+  '/services/web-development',
+  '/services/geo',
+];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return locales.flatMap((locale) =>

@@ -10,16 +10,16 @@ interface Props {
 
 export function GlowCard({ children, className = '', style }: Props) {
   const ref = useRef<HTMLDivElement>(null);
-  const [glow, setGlow] = useState({ x: 0, y: 0, opacity: 0 });
+  const [pos, setPos] = useState({ x: 0, y: 0, active: false });
 
   function onMouseMove(e: React.MouseEvent<HTMLDivElement>) {
     const rect = ref.current?.getBoundingClientRect();
     if (!rect) return;
-    setGlow({ x: e.clientX - rect.left, y: e.clientY - rect.top, opacity: 1 });
+    setPos({ x: e.clientX - rect.left, y: e.clientY - rect.top, active: true });
   }
 
   function onMouseLeave() {
-    setGlow((g) => ({ ...g, opacity: 0 }));
+    setPos((p) => ({ ...p, active: false }));
   }
 
   return (
@@ -27,16 +27,22 @@ export function GlowCard({ children, className = '', style }: Props) {
       ref={ref}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
-      className={`relative overflow-hidden ${className}`}
-      style={style}
+      className={`relative overflow-hidden transition-shadow duration-300 ${className}`}
+      style={{
+        ...style,
+        // Resting state matches the subtle shadow passed via className (inline wins over class)
+        boxShadow: pos.active
+          ? '0 0 0 1px rgba(16,185,129,0.45), 0 0 32px rgba(16,185,129,0.2), 0 4px 20px rgba(0,0,0,0.06)'
+          : '0 0 0 1px rgba(16,185,129,0.08), 0 4px 20px rgba(0,0,0,0.04)',
+      }}
     >
-      {/* Mouse-tracking spotlight */}
+      {/* Cursor-following interior spotlight */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -inset-px rounded-[inherit] transition-opacity duration-500"
+        className="pointer-events-none absolute inset-0 rounded-[inherit] transition-opacity duration-300"
         style={{
-          opacity: glow.opacity,
-          background: `radial-gradient(360px circle at ${glow.x}px ${glow.y}px, rgba(16,185,129,0.12), transparent 60%)`,
+          opacity: pos.active ? 1 : 0,
+          background: `radial-gradient(260px circle at ${pos.x}px ${pos.y}px, rgba(16,185,129,0.22), transparent 65%)`,
         }}
       />
       {children}

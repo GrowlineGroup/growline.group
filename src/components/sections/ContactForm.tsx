@@ -22,6 +22,9 @@ type FormTranslations = {
   tagLabel: string;
   tagHint: string;
   tags: Tags;
+  cssMerchantIdLabel: string;
+  cssMerchantIdPlaceholder: string;
+  cssMerchantIdError: string;
   merchantIdLabel: string;
   merchantIdPlaceholder: string;
   domainLabel: string;
@@ -83,6 +86,7 @@ export function ContactForm({ form }: Props) {
       email: get('email'),
       whatsapp: get('whatsapp') || undefined,
       tags: selectedTags,
+      cssMerchantId: get('cssMerchantId') || undefined,
       merchantId: get('merchantId') || undefined,
       domain: get('domain') || undefined,
       collaboratorCode: get('collaboratorCode') || undefined,
@@ -214,22 +218,31 @@ export function ContactForm({ form }: Props) {
         </div>
       </div>
 
-      {/* GMC-specific fields */}
+      {/* CSS-specific: Merchant Center ID (10 digits) */}
+      {selectedTags.includes('css') && (
+        <div className="flex flex-col gap-2">
+          <label htmlFor="cssMerchantId" className="text-sm font-medium text-zinc-700">
+            {form.cssMerchantIdLabel}
+          </label>
+          <input
+            id="cssMerchantId"
+            name="cssMerchantId"
+            type="text"
+            inputMode="numeric"
+            pattern="[0-9]{10}"
+            minLength={10}
+            maxLength={10}
+            disabled={isLoading}
+            placeholder={form.cssMerchantIdPlaceholder}
+            title={form.cssMerchantIdError}
+            className={inputClass}
+          />
+        </div>
+      )}
+
+      {/* GMC-specific: Domain + Collaborator Code */}
       {selectedTags.includes('gmc') && (
         <div className="flex flex-col gap-4 rounded-xl border border-zinc-100 bg-zinc-50/50 p-4">
-          <div className="flex flex-col gap-2">
-            <label htmlFor="merchantId" className="text-sm font-medium text-zinc-700">
-              {form.merchantIdLabel}
-            </label>
-            <input
-              id="merchantId"
-              name="merchantId"
-              type="text"
-              disabled={isLoading}
-              placeholder={form.merchantIdPlaceholder}
-              className={inputClass}
-            />
-          </div>
           <div className="flex flex-col gap-2">
             <label htmlFor="domain" className="text-sm font-medium text-zinc-700">
               {form.domainLabel}
@@ -259,8 +272,8 @@ export function ContactForm({ form }: Props) {
         </div>
       )}
 
-      {/* CSS / Web Dev-specific fields */}
-      {(selectedTags.includes('css') || selectedTags.includes('webDev')) && (
+      {/* Web Dev-specific: Website URL */}
+      {selectedTags.includes('webDev') && (
         <div className="flex flex-col gap-2">
           <label htmlFor="websiteUrl" className="text-sm font-medium text-zinc-700">
             {form.websiteUrlLabel}

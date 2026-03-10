@@ -156,7 +156,11 @@ export function Header({ locale }: Props) {
           <Link
             href={`/${locale}/kontakt`}
             onClick={() => setMobileOpen(false)}
-            className="mt-2 rounded-full bg-emerald-600 px-4 py-2.5 text-center text-sm font-semibold text-white hover:bg-emerald-500 transition-colors"
+            className={`rounded-lg px-3 py-2.5 text-sm transition-colors ${
+              isActive(`/${locale}/kontakt`)
+                ? 'text-white font-medium'
+                : 'text-zinc-300 hover:bg-zinc-800/60 hover:text-white'
+            }`}
           >
             {t.nav.contact}
           </Link>
