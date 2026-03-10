@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { FadeIn } from '@/components/ui/FadeIn';
 import { BentoGrid } from '@/components/ui/BentoGrid';
+import { baseUrl } from '@/lib/config';
 
 export async function generateMetadata({
   params,
@@ -14,9 +15,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = getTranslations(locale as Locale);
+  const canonicalUrl = `${baseUrl}/${locale}/services/web-development`;
   return {
     title: t.pages.webDev.hero.headline,
     description: t.pages.webDev.hero.subtext,
+    alternates: { canonical: canonicalUrl },
+    openGraph: { url: canonicalUrl },
   };
 }
 

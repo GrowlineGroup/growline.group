@@ -157,8 +157,12 @@ export async function POST(request: NextRequest): Promise<NextResponse<ContactRe
     const fromEmail = process.env.CONTACT_FROM_EMAIL ?? 'kontakt@growline.group';
 
     if (!apiKey || !toEmail) {
-      // In development without env vars: log and return success
-      console.log('[contact] Submission received (no env vars set):', JSON.stringify(payload, null, 2));
+      if (process.env.NODE_ENV === 'production') {
+        console.error('[contact/route] Missing RESEND_API_KEY or CONTACT_TO_EMAIL in production');
+        return NextResponse.json({ success: false, error: 'Service temporarily unavailable' }, { status: 503 });
+      }
+      // Development only: log payload and simulate success
+      console.log('[contact] Dev mode — submission received (no env vars set):', JSON.stringify(payload, null, 2));
       return NextResponse.json({ success: true });
     }
 

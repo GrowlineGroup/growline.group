@@ -7,6 +7,7 @@ import { FadeIn } from '@/components/ui/FadeIn';
 import { GlowCard } from '@/components/ui/GlowCard';
 import { SparklesCore } from '@/components/ui/SparklesCore';
 import { ContactForm } from '@/components/sections/ContactForm';
+import { baseUrl } from '@/lib/config';
 
 export async function generateMetadata({
   params,
@@ -15,9 +16,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = getTranslations(locale as Locale);
+  const canonicalUrl = `${baseUrl}/${locale}/kontakt`;
   return {
     title: t.contact.headline,
     description: t.contact.subtext,
+    alternates: { canonical: canonicalUrl },
+    openGraph: { url: canonicalUrl },
   };
 }
 

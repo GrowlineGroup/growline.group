@@ -3,6 +3,7 @@ import { Locale } from '@/i18n/config';
 import { getTranslations } from '@/i18n';
 import { Container } from '@/components/ui/Container';
 import { FadeIn } from '@/components/ui/FadeIn';
+import { baseUrl } from '@/lib/config';
 
 export async function generateMetadata({
   params,
@@ -11,8 +12,11 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = getTranslations(locale as Locale);
+  const canonicalUrl = `${baseUrl}/${locale}/impressum`;
   return {
     title: t.imprint.headline,
+    alternates: { canonical: canonicalUrl },
+    openGraph: { url: canonicalUrl },
   };
 }
 

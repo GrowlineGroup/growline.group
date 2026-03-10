@@ -5,6 +5,7 @@ import { Container } from '@/components/ui/Container';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { FadeIn } from '@/components/ui/FadeIn';
+import { baseUrl } from '@/lib/config';
 
 export async function generateMetadata({
   params,
@@ -13,9 +14,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = getTranslations(locale as Locale);
+  const canonicalUrl = `${baseUrl}/${locale}/services/google-merchant`;
   return {
     title: t.pages.googleMerchant.hero.headline,
     description: t.pages.googleMerchant.hero.subtext,
+    alternates: { canonical: canonicalUrl },
+    openGraph: { url: canonicalUrl },
   };
 }
 
