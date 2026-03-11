@@ -47,14 +47,18 @@ const BEAMS = [
 export function CssGridBeam({ children }: { children: React.ReactNode }) {
   return (
     <div className="relative">
-      {/* Subtle grid pattern */}
+      {/* Grid — bleeds 10rem above and below, fades at edges via mask */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0"
+        className="pointer-events-none absolute inset-x-0"
         style={{
+          top: '-10rem',
+          bottom: '-10rem',
           backgroundImage:
             'linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)',
           backgroundSize: '40px 40px',
+          maskImage: 'linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%)',
+          WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%)',
         }}
       />
 

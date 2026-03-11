@@ -70,7 +70,7 @@ export default async function CSSEntryPage({
 
 
       {/* ── What is CSS Entry ─────────────────────────────── */}
-      <section className="relative overflow-hidden py-24">
+      <section className="relative py-24">
         <CssGridBeam>
           <Container>
             <FadeIn>
