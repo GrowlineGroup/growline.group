@@ -14,7 +14,7 @@ export function ServiceSection({ locale, serviceIndex }: Props) {
   const t = getTranslations(locale);
   const service = t.services.items[serviceIndex];
   const reversed = serviceIndex % 2 !== 0;
-  const bgClass = serviceIndex % 2 === 0 ? 'bg-zinc-950' : 'bg-[#0d0d11]';
+  const bgClass = 'bg-zinc-950';
 
   return (
     <section id={service.key} className={`relative overflow-hidden ${bgClass} py-24 dot-grid`}>

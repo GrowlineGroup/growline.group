@@ -80,6 +80,8 @@ export default async function GoogleMerchantPage({
 
       {/* ── 2. Nachweise / Evidence ───────────────────────── */}
       <section className="relative overflow-hidden bg-zinc-900 py-24">
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-zinc-950 to-transparent z-[2]" />
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-zinc-950 to-transparent z-[2]" />
         <BalloonPopBackground className="absolute inset-0" />
         <Container className="relative z-10">
           <FadeIn>
@@ -107,7 +109,7 @@ export default async function GoogleMerchantPage({
       </section>
 
       {/* ── 3. Pakete & Preise ────────────────────────────── */}
-      <section className="bg-[#0d0d11] py-24 dot-grid">
+      <section className="bg-zinc-950 py-24 dot-grid">
         <Container>
           <FadeIn>
             <div className="flex flex-col items-center gap-4 text-center mb-14">
@@ -231,7 +233,7 @@ export default async function GoogleMerchantPage({
       </section>
 
       {/* ── 5. Unsere Herangehensweise ────────────────────── */}
-      <section className="relative overflow-hidden bg-[#0d0d11] py-24 dot-grid">
+      <section className="relative overflow-hidden bg-zinc-950 py-24 dot-grid">
         <Container>
           <FadeIn>
             <div className="flex flex-col items-center gap-4 text-center mb-14">

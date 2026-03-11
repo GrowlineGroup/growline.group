@@ -107,8 +107,10 @@ export default async function GeoPage({
       </section>
 
       {/* ── Services ─────────────────────────────────────── */}
-      <section className="bg-zinc-900 py-24 dot-grid">
-        <Container>
+      <section className="relative overflow-hidden bg-zinc-900 py-24 dot-grid">
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-zinc-950 to-transparent z-[1]" />
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-zinc-950 to-transparent z-[1]" />
+        <Container className="relative z-10">
           <FadeIn>
             <div className="flex flex-col items-center text-center gap-4 mb-12">
               <div className="mx-auto w-fit">
@@ -134,7 +136,7 @@ export default async function GeoPage({
       </section>
 
       {/* ── Pricing ──────────────────────────────────────── */}
-      <section className="bg-zinc-950 py-24 border-t border-zinc-800/60">
+      <section className="bg-zinc-950 py-24">
         <Container>
           <FadeIn>
             <div className="flex flex-col items-center gap-4 text-center mb-14">
@@ -159,7 +161,7 @@ export default async function GeoPage({
       </section>
 
       {/* ── Urgency ──────────────────────────────────────── */}
-      <section className="bg-zinc-950 py-24 border-t border-zinc-800/60">
+      <section className="bg-zinc-950 py-24">
         <Container>
           <FadeIn>
             <div className="flex flex-col items-center text-center gap-4 mb-14">

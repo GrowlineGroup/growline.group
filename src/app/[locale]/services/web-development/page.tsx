@@ -90,8 +90,10 @@ export default async function WebDevelopmentPage({
       </section>
 
       {/* ── Tech Stack ───────────────────────────────────── */}
-      <section className="bg-zinc-900 py-24">
-        <Container>
+      <section className="relative overflow-hidden bg-zinc-900 py-24">
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-zinc-950 to-transparent z-[1]" />
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-zinc-950 to-transparent z-[1]" />
+        <Container className="relative z-10">
           <FadeIn>
             <div className="flex flex-col gap-4 max-w-2xl mb-12">
               <Eyebrow>{p.tech.eyebrow}</Eyebrow>
@@ -151,8 +153,9 @@ export default async function WebDevelopmentPage({
       </section>
 
       {/* ── Projects ─────────────────────────────────────── */}
-      <section className="bg-zinc-900 py-24">
-        <Container>
+      <section className="relative overflow-hidden bg-zinc-900 py-24">
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-zinc-950 to-transparent z-[1]" />
+        <Container className="relative z-10">
           <FadeIn>
             <WebDevProjects
               projects={p.projects.placeholders}
