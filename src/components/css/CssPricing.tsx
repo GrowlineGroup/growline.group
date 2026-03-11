@@ -124,9 +124,9 @@ export function CssPricing({
   );
 }
 
-// index 0 = Einstieg (sm), index 1 = Pro (lg), index 2 = Bundle (md)
+// index 0 = Beginner, index 1 = Pro (lg), index 2 = Bundle — Beginner & Bundle same size
 const SIZES = [
-  { padding: 'p-8',  priceText: 'text-4xl' },
+  { padding: 'p-10', priceText: 'text-5xl' },
   { padding: 'p-12', priceText: 'text-6xl' },
   { padding: 'p-10', priceText: 'text-5xl' },
 ] as const;

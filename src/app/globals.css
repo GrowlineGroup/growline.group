@@ -244,6 +244,13 @@ body {
   animation: wordReveal 0.4s ease-out both;
 }
 
+@keyframes beamTravel {
+  0%   { stroke-dashoffset: 320; opacity: 0; }
+  8%   { opacity: 1; }
+  85%  { opacity: 0.9; }
+  100% { stroke-dashoffset: -80; opacity: 0; }
+}
+
 @utility no-scrollbar {
   scrollbar-width: none;
   -ms-overflow-style: none;

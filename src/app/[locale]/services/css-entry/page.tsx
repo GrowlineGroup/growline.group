@@ -6,6 +6,7 @@ import { Eyebrow } from '@/components/ui/Eyebrow';
 import { Button } from '@/components/ui/Button';
 import { FadeIn } from '@/components/ui/FadeIn';
 import { CssPricing } from '@/components/css/CssPricing';
+import { CssGridBeam } from '@/components/ui/CssGridBeam';
 import { baseUrl } from '@/lib/config';
 
 export async function generateMetadata({
@@ -67,7 +68,10 @@ export default async function CSSEntryPage({
       </section>
 
       {/* ── What is CSS Entry ─────────────────────────────── */}
-      <section className="bg-zinc-900 py-24">
+      <section className="relative overflow-hidden bg-zinc-900 py-24">
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-zinc-950 to-transparent z-[1]" />
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-zinc-950 to-transparent z-[1]" />
+        <CssGridBeam>
         <Container>
           <FadeIn>
             <div className="mx-auto max-w-2xl flex flex-col items-center text-center gap-8">
@@ -91,6 +95,7 @@ export default async function CSSEntryPage({
             </div>
           </FadeIn>
         </Container>
+        </CssGridBeam>
       </section>
 
       {/* ── Pricing ──────────────────────────────────────── */}
@@ -119,7 +124,8 @@ export default async function CSSEntryPage({
       </section>
 
       {/* ── Process ──────────────────────────────────────── */}
-      <section className="bg-zinc-900 py-24">
+      <section className="relative overflow-hidden bg-zinc-900 py-24">
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-zinc-950 to-transparent z-[1]" />
         <Container>
           <FadeIn>
             <div className="flex flex-col items-center gap-4 text-center mb-14">
