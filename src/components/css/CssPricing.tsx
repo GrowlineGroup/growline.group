@@ -152,10 +152,14 @@ function CssTierCard({
     : `€${tier.monthlyPrice}`;
 
   const cardStyle = (tier.featured || mobile)
-    ? 'gradient-border bg-zinc-950 shadow-[0_8px_40px_rgba(16,185,129,0.07)]'
-    : 'border border-zinc-800 bg-zinc-900/60 hover:border-zinc-700 hover:-translate-y-1 hover:shadow-[0_16px_48px_rgba(0,0,0,0.35)]';
+    ? 'gradient-border bg-zinc-950 shadow-[0_8px_40px_rgba(16,185,129,0.07)] hover:shadow-[0_24px_64px_rgba(16,185,129,0.14)]'
+    : 'border border-zinc-800 bg-zinc-900/60 hover:border-zinc-700 hover:shadow-[0_16px_48px_rgba(0,0,0,0.35)]';
 
-  const scaleStyle = !mobile && tier.featured ? 'scale-[1.08] z-10' : '';
+  const scaleStyle = !mobile && tier.featured
+    ? 'scale-[1.08] z-10 hover:scale-[1.11]'
+    : !mobile
+    ? 'hover:scale-[1.03] hover:z-10'
+    : '';
 
   return (
     <div className={`relative flex flex-col h-full rounded-2xl overflow-hidden transition-all duration-300 ease-out ${cardStyle} ${scaleStyle}`}>
