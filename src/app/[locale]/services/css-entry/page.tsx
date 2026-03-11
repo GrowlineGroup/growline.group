@@ -68,8 +68,6 @@ export default async function CSSEntryPage({
         </Container>
       </section>
 
-      {/* ── Divider ───────────────────────────────────────── */}
-      <div aria-hidden className="h-px bg-gradient-to-r from-transparent via-zinc-700/40 to-transparent" />
 
       {/* ── What is CSS Entry ─────────────────────────────── */}
       <section className="relative overflow-hidden py-24">
@@ -100,8 +98,6 @@ export default async function CSSEntryPage({
         </CssGridBeam>
       </section>
 
-      {/* ── Divider ───────────────────────────────────────── */}
-      <div aria-hidden className="h-px bg-gradient-to-r from-transparent via-zinc-700/40 to-transparent" />
 
       {/* ── Pricing ──────────────────────────────────────── */}
       <section className="relative overflow-hidden py-24 dot-grid">
@@ -128,8 +124,6 @@ export default async function CSSEntryPage({
         </Container>
       </section>
 
-      {/* ── Divider ───────────────────────────────────────── */}
-      <div aria-hidden className="h-px bg-gradient-to-r from-transparent via-zinc-700/40 to-transparent" />
 
       {/* ── Process ──────────────────────────────────────── */}
       <section className="relative overflow-hidden py-24">
