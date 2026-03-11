@@ -405,7 +405,6 @@ const en = {
         headline: 'Why Growline Group?',
         points: [
           'Shopify stores only – deep expertise in one system, not a patchwork approach',
-          'Diagnosis first – you know what is achievable before any payment',
           'Clear cost structure upfront – no surprises',
           'Direct contact, no ticket system',
           'info@fixmygmc.com – the address for your admin invitation in Merchant Center',

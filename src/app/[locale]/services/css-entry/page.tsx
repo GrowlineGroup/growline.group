@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/Button';
 import { FadeIn } from '@/components/ui/FadeIn';
 import { CssPricing } from '@/components/css/CssPricing';
 import { CssGridBeam } from '@/components/ui/CssGridBeam';
+import { BackgroundBeamsWithCollision } from '@/components/ui/BackgroundBeamsWithCollision';
 import { baseUrl } from '@/lib/config';
 
 export async function generateMetadata({
@@ -126,7 +127,8 @@ export default async function CSSEntryPage({
       {/* ── Process ──────────────────────────────────────── */}
       <section className="relative overflow-hidden bg-zinc-900 py-24">
         <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-zinc-950 to-transparent z-[1]" />
-        <Container>
+        <BackgroundBeamsWithCollision className="absolute inset-0 opacity-40" />
+        <Container className="relative z-10">
           <FadeIn>
             <div className="flex flex-col items-center gap-4 text-center mb-14">
               <div className="mx-auto w-fit">
