@@ -199,7 +199,7 @@ export function Header({ locale }: Props) {
       <div
         className={`overflow-hidden transition-all duration-300 md:hidden ${mobileOpen ? 'max-h-[520px]' : 'max-h-0'}`}
       >
-        <nav className="flex flex-col gap-0.5 border-t border-zinc-800/50 bg-zinc-950/96 backdrop-blur-xl px-4 py-4">
+        <nav className="flex flex-col gap-0.5 bg-zinc-950/96 backdrop-blur-xl px-4 py-4">
           {/* Subtle top shimmer */}
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-emerald-500/20 to-transparent" />
 

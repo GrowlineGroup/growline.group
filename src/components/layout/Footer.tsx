@@ -94,7 +94,7 @@ export function Footer({ locale }: Props) {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-zinc-800/60 pt-6 sm:flex-row">
+        <div className="mt-10 flex flex-col items-center justify-between gap-3 pt-6 sm:flex-row">
           <p className="text-xs text-zinc-600">{t.footer.copyright}</p>
           <div className="flex gap-4">
             <Link
