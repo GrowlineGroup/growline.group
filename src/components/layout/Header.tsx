@@ -95,7 +95,7 @@ export function Header({ locale }: Props) {
   const inactive = `${baseItem} text-zinc-400 hover:text-zinc-100`;
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-zinc-950/82 backdrop-blur-xl border-b border-white/[0.055] shadow-[0_1px_0_0_rgba(255,255,255,0.03),0_6px_28px_rgba(0,0,0,0.4)]">
+    <header className="sticky top-0 z-50 w-full bg-zinc-950/82 backdrop-blur-xl shadow-[0_6px_28px_rgba(0,0,0,0.4)]">
       <div className="mx-auto flex h-[72px] max-w-6xl items-center justify-between px-6">
 
         {/* ── Logo ────────────────────────────────────────── */}
