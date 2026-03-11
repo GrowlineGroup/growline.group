@@ -124,11 +124,10 @@ export function CssPricing({
   );
 }
 
-// index 0 = Beginner, index 1 = Pro (lg), index 2 = Bundle — Beginner & Bundle same size
 const SIZES = [
-  { padding: 'p-10', priceText: 'text-5xl' },
   { padding: 'p-12', priceText: 'text-6xl' },
-  { padding: 'p-10', priceText: 'text-5xl' },
+  { padding: 'p-12', priceText: 'text-6xl' },
+  { padding: 'p-12', priceText: 'text-6xl' },
 ] as const;
 
 function CssTierCard({
