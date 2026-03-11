@@ -108,7 +108,7 @@ export function CssGridBeam({ children }: { children: React.ReactNode }) {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'radial-gradient(ellipse 60% 50% at 50% 50%, rgba(24,24,27,0.82) 0%, rgba(24,24,27,0.35) 50%, transparent 75%)',
+            'radial-gradient(ellipse 60% 50% at 50% 50%, rgba(9,9,11,0.85) 0%, rgba(9,9,11,0.4) 50%, transparent 75%)',
         }}
       />
 

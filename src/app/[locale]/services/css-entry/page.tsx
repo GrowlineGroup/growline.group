@@ -36,15 +36,13 @@ export default async function CSSEntryPage({
   const p = t.pages.cssEntry;
 
   return (
-    <>
+    <div className="bg-zinc-950">
       {/* ── Hero ─────────────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-zinc-950 pb-24 pt-16 dot-grid">
+      <section className="relative overflow-hidden pb-24 pt-16 dot-grid">
         <div
           aria-hidden
           className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-600/10 blur-[100px]"
         />
-        {/* Bottom bleed into next section */}
-        <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-zinc-900" />
         <Container className="relative flex flex-col gap-8">
           <Button
             href={`/${locale}`}
@@ -70,39 +68,43 @@ export default async function CSSEntryPage({
         </Container>
       </section>
 
+      {/* ── Divider ───────────────────────────────────────── */}
+      <div aria-hidden className="h-px bg-gradient-to-r from-transparent via-zinc-700/40 to-transparent" />
+
       {/* ── What is CSS Entry ─────────────────────────────── */}
-      <section className="relative overflow-hidden bg-zinc-900 py-24">
-        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-zinc-950 to-transparent z-[1]" />
-        <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-zinc-950 to-transparent z-[1]" />
+      <section className="relative overflow-hidden py-24">
         <CssGridBeam>
-        <Container>
-          <FadeIn>
-            <div className="mx-auto max-w-2xl flex flex-col items-center text-center gap-8">
-              <div className="flex flex-col items-center gap-4">
-                <Eyebrow>{p.what.eyebrow}</Eyebrow>
-                <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                  {p.what.headline}
-                </h2>
-                <p className="text-base leading-relaxed text-zinc-400 max-w-xl">{p.what.body}</p>
+          <Container>
+            <FadeIn>
+              <div className="mx-auto max-w-2xl flex flex-col items-center text-center gap-8">
+                <div className="flex flex-col items-center gap-4">
+                  <Eyebrow>{p.what.eyebrow}</Eyebrow>
+                  <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                    {p.what.headline}
+                  </h2>
+                  <p className="text-base leading-relaxed text-zinc-400 max-w-xl">{p.what.body}</p>
+                </div>
+                <ul className="flex flex-col gap-4 text-left">
+                  {p.what.points.map((point, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-500/15">
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-glow-pulse" />
+                      </span>
+                      <span className="text-sm text-zinc-400">{point}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <ul className="flex flex-col gap-4 text-left">
-                {p.what.points.map((point, i) => (
-                  <li key={i} className="flex items-start gap-3">
-                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-500/15">
-                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-glow-pulse" />
-                    </span>
-                    <span className="text-sm text-zinc-400">{point}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </FadeIn>
-        </Container>
+            </FadeIn>
+          </Container>
         </CssGridBeam>
       </section>
 
+      {/* ── Divider ───────────────────────────────────────── */}
+      <div aria-hidden className="h-px bg-gradient-to-r from-transparent via-zinc-700/40 to-transparent" />
+
       {/* ── Pricing ──────────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-zinc-950 py-24 dot-grid">
+      <section className="relative overflow-hidden py-24 dot-grid">
         <Container>
           <FadeIn>
             <div className="flex flex-col items-center gap-4 text-center mb-14">
@@ -126,9 +128,11 @@ export default async function CSSEntryPage({
         </Container>
       </section>
 
+      {/* ── Divider ───────────────────────────────────────── */}
+      <div aria-hidden className="h-px bg-gradient-to-r from-transparent via-zinc-700/40 to-transparent" />
+
       {/* ── Process ──────────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-zinc-900 py-24">
-        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-zinc-950 to-transparent z-[1]" />
+      <section className="relative overflow-hidden py-24">
         <BackgroundBeamsWithCollision className="absolute inset-0 opacity-40" />
         <Container className="relative z-10">
           <FadeIn>
@@ -162,6 +166,6 @@ export default async function CSSEntryPage({
           </div>
         </Container>
       </section>
-    </>
+    </div>
   );
 }
