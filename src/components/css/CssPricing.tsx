@@ -104,7 +104,7 @@ export function CssPricing({
       </div>
 
       {/* Desktop: 3-col grid */}
-      <div className="hidden md:grid md:grid-cols-3 gap-6 items-end">
+      <div className="hidden md:grid md:grid-cols-3 gap-6 items-stretch">
         {tiers.map((tier, i) => (
           <CssTierCard key={tier.name} tier={tier} index={i} annual={annual} locale={locale} />
         ))}
@@ -156,7 +156,7 @@ function CssTierCard({
     : 'border border-zinc-800 bg-zinc-900/60 hover:border-zinc-700 hover:-translate-y-1 hover:shadow-[0_16px_48px_rgba(0,0,0,0.35)]';
 
   return (
-    <div className={`relative flex flex-col rounded-2xl overflow-hidden transition-all duration-300 ease-out ${cardStyle}`}>
+    <div className={`relative flex flex-col h-full rounded-2xl overflow-hidden transition-all duration-300 ease-out ${cardStyle}`}>
       {/* Strip badge */}
       {tier.badge && (
         <div className="bg-emerald-500/10 border-b border-emerald-500/15 px-6 py-2.5 text-center text-xs font-semibold uppercase tracking-widest text-emerald-400">
