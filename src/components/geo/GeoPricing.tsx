@@ -77,8 +77,10 @@ function PricingCard({
     ? 'border border-zinc-800 bg-zinc-900/40 hover:border-zinc-700 hover:-translate-y-0.5 hover:shadow-[0_8px_32px_rgba(0,0,0,0.3)]'
     : 'border border-zinc-800 bg-zinc-900/60 hover:border-zinc-700 hover:-translate-y-1 hover:shadow-[0_16px_48px_rgba(0,0,0,0.35)]';
 
+  const scaleStyle = pkg.featured ? 'scale-[1.08] z-10' : '';
+
   return (
-    <div className={`relative flex flex-col gap-7 rounded-2xl p-10 h-full transition-all duration-300 ease-out ${cardStyle}`}>
+    <div className={`relative flex flex-col gap-7 rounded-2xl p-10 h-full transition-all duration-300 ease-out ${cardStyle} ${scaleStyle}`}>
       {pkg.featured && (
         <div className="absolute top-7 right-7 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-sm font-semibold text-emerald-400">
           {recommendedLabel}

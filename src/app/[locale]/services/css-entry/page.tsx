@@ -43,6 +43,8 @@ export default async function CSSEntryPage({
           aria-hidden
           className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-600/10 blur-[100px]"
         />
+        {/* Bottom bleed into next section */}
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-zinc-900" />
         <Container className="relative flex flex-col gap-8">
           <Button
             href={`/${locale}`}

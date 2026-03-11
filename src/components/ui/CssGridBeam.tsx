@@ -102,6 +102,16 @@ export function CssGridBeam({ children }: { children: React.ReactNode }) {
         </svg>
       ))}
 
+      {/* Center mask — dims beams behind text for readability */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            'radial-gradient(ellipse 60% 50% at 50% 50%, rgba(24,24,27,0.82) 0%, rgba(24,24,27,0.35) 50%, transparent 75%)',
+        }}
+      />
+
       {/* Section content */}
       <div className="relative z-10">{children}</div>
     </div>

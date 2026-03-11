@@ -17,9 +17,9 @@ interface GeoDemoProps {
 
 // [userAppears, thinkingAppears, responseAppears] in ms after viewport entry
 const TIMINGS: [number, number, number][] = [
-  [400, 1100, 2600],
-  [4000, 4700, 6200],
-  [7800, 8600, 10200],
+  [600,   1600,  4200],
+  [7500,  8800, 12000],
+  [16500, 18000, 22000],
 ];
 
 // Splits text into word tokens and one highlight token (no trailing spaces in highlight)
@@ -157,7 +157,7 @@ export function GeoDemo({ queries, aiLabel }: GeoDemoProps) {
                           <Fragment key={wi}>
                             <span
                               className="rounded-sm bg-emerald-500/25 px-1 py-0.5 font-semibold text-emerald-300 animate-word-reveal"
-                              style={{ animationDelay: `${wi * 45}ms` }}
+                              style={{ animationDelay: `${wi * 70}ms` }}
                             >
                               {token.content}
                             </span>{' '}
@@ -166,7 +166,7 @@ export function GeoDemo({ queries, aiLabel }: GeoDemoProps) {
                           <span
                             key={wi}
                             className="animate-word-reveal"
-                            style={{ animationDelay: `${wi * 45}ms` }}
+                            style={{ animationDelay: `${wi * 70}ms` }}
                           >
                             {token.content}{' '}
                           </span>
