@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/Button';
 import { FadeIn } from '@/components/ui/FadeIn';
 import { baseUrl } from '@/lib/config';
 import { LegalNoteLinks } from '@/components/gmc/LegalNoteLinks';
+import { BalloonPopBackground } from '@/components/ui/BalloonPopBackground';
 
 export async function generateMetadata({
   params,
@@ -79,16 +80,8 @@ export default async function GoogleMerchantPage({
 
       {/* ── 2. Nachweise / Evidence ───────────────────────── */}
       <section className="relative overflow-hidden bg-zinc-900 py-24">
-        {/* Spotlight glow */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute left-1/2 top-0 h-px w-72 -translate-x-1/2 bg-gradient-to-r from-transparent via-emerald-400/35 to-transparent"
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute left-1/2 top-0 h-80 w-[640px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-600/[0.08] blur-[100px] animate-glow-pulse"
-        />
-        <Container className="relative">
+        <BalloonPopBackground className="absolute inset-0" />
+        <Container className="relative z-10">
           <FadeIn>
             <div className="flex flex-col items-center gap-4 text-center mb-14">
               <Eyebrow>{p.evidence.eyebrow}</Eyebrow>
