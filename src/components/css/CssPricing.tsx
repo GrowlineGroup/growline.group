@@ -143,9 +143,7 @@ function CssTierCard({
   locale: string;
   mobile?: boolean;
 }) {
-  const size = mobile
-    ? { padding: 'p-10', priceText: 'text-5xl' }
-    : (SIZES[index] ?? SIZES[2]);
+  const size = SIZES[index] ?? SIZES[0];
 
   const price = tier.custom
     ? 'Auf Anfrage'
