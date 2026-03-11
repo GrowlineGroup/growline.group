@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Locale } from '@/i18n/config';
 import { getTranslations } from '@/i18n';
 import { Container } from '@/components/ui/Container';
-import { Badge } from '@/components/ui/Badge';
+import { Eyebrow } from '@/components/ui/Eyebrow';
 import { GlowCard } from '@/components/ui/GlowCard';
 
 interface Props {
@@ -40,7 +40,7 @@ export function Hero({ locale }: Props) {
       <Container className="relative flex flex-col items-center gap-7 text-center">
         {/* Badge */}
         <div className="hero-reveal-1">
-          <Badge variant="light">{t.hero.badge}</Badge>
+          <Eyebrow>{t.hero.badge}</Eyebrow>
         </div>
 
         {/* Headline */}
@@ -58,8 +58,20 @@ export function Hero({ locale }: Props) {
           {t.hero.subtext}
         </p>
 
+        {/* Trust stats */}
+        <div className="hero-reveal-4 flex items-center justify-center gap-8 sm:gap-14">
+          {t.hero.stats.map((stat) => (
+            <div key={stat.label} className="flex flex-col items-center gap-0.5">
+              <span className="font-mono text-2xl font-bold text-emerald-400 sm:text-3xl">
+                {stat.value}
+              </span>
+              <span className="text-xs text-zinc-500">{stat.label}</span>
+            </div>
+          ))}
+        </div>
+
         {/* Section label */}
-        <div className="hero-reveal-5 mt-4 flex flex-col items-center gap-3">
+        <div className="hero-reveal-5 mt-2 flex flex-col items-center gap-3">
           <p className="text-xs font-semibold uppercase tracking-widest text-zinc-600">
             {t.hero.tilesLabel}
           </p>
@@ -102,11 +114,15 @@ export function Hero({ locale }: Props) {
         />
       </Container>
 
-      {/* Scroll arrow */}
+      {/* Scroll arrow — links to first service section */}
       <div className="relative flex justify-center pb-10 pt-14">
-        <div className="flex h-8 w-8 items-center justify-center rounded-full border border-zinc-800 text-xs text-zinc-600 animate-scroll-bounce">
+        <a
+          href="#css-entry"
+          aria-label="Zu den Leistungen scrollen"
+          className="flex h-8 w-8 items-center justify-center rounded-full border border-zinc-800 text-xs text-zinc-600 transition-colors duration-200 hover:border-zinc-600 hover:text-zinc-400 animate-scroll-bounce"
+        >
           ↓
-        </div>
+        </a>
       </div>
     </section>
   );

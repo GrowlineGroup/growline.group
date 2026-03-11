@@ -5,6 +5,8 @@ import { baseUrl } from '@/lib/config';
 const pages = [
   '',
   '/kontakt',
+  '/ueber-uns',
+  '/commitment',
   '/impressum',
   '/datenschutz',
   '/services/css-entry',

@@ -11,27 +11,37 @@ export function CTA({ locale }: Props) {
   const t = getTranslations(locale);
 
   return (
-    <section id="contact" className="relative overflow-hidden bg-white py-28 dark:bg-zinc-50">
-      {/* Emerald gradient top line */}
+    <section id="contact" className="relative overflow-hidden bg-zinc-950 py-24">
+      {/* Top accent line */}
       <div
         aria-hidden
-        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-emerald-500/60 to-transparent"
+        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent"
       />
-      {/* Subtle glow */}
+      {/* Wide soft glow — base layer */}
       <div
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-0 h-64 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-400/10 blur-3xl"
+        className="pointer-events-none absolute left-1/2 top-1/2 h-[560px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-600/[0.08] blur-[120px]"
+      />
+      {/* Tighter focused glow — adds depth */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute left-1/2 top-1/2 h-[240px] w-[400px] -translate-x-1/2 -translate-y-[55%] rounded-full bg-teal-500/[0.06] blur-[60px]"
+      />
+      {/* Bottom fade — softer transition into footer */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-zinc-950 to-transparent"
       />
 
       <Container className="relative flex flex-col items-center gap-6 text-center">
-        <h2 className="max-w-xl text-4xl font-bold tracking-tight text-zinc-900 sm:text-5xl">
+        <h2 className="max-w-xl text-4xl font-bold tracking-tight text-white sm:text-5xl">
           {t.cta.headline}
         </h2>
-        <p className="max-w-md text-base leading-relaxed text-zinc-500">{t.cta.body}</p>
+        <p className="max-w-md text-base leading-relaxed text-zinc-400">{t.cta.body}</p>
         <Button
           href={`/${locale}/kontakt`}
           variant="primary"
-          className="mt-2 bg-emerald-600 text-white hover:bg-emerald-500 dark:bg-emerald-600 dark:text-white dark:hover:bg-emerald-500"
+          className="mt-2 bg-emerald-600 text-white hover:bg-emerald-500 shadow-[0_0_24px_rgba(16,185,129,0.2)]"
         >
           {t.cta.button}
         </Button>

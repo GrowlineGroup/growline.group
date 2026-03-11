@@ -2,9 +2,14 @@ import type { Metadata } from 'next';
 import { Locale } from '@/i18n/config';
 import { getTranslations } from '@/i18n';
 import { Container } from '@/components/ui/Container';
-import { Badge } from '@/components/ui/Badge';
+import { Eyebrow } from '@/components/ui/Eyebrow';
 import { Button } from '@/components/ui/Button';
 import { FadeIn } from '@/components/ui/FadeIn';
+import { GeoDemo } from '@/components/geo/GeoDemo';
+import { GeoServiceCard } from '@/components/geo/GeoServiceCard';
+import { GeoPricing } from '@/components/geo/GeoPricing';
+import { GeoShift } from '@/components/geo/GeoShift';
+import { GeoUrgency } from '@/components/geo/GeoUrgency';
 import { baseUrl } from '@/lib/config';
 
 export async function generateMetadata({
@@ -16,7 +21,9 @@ export async function generateMetadata({
   const t = getTranslations(locale as Locale);
   const canonicalUrl = `${baseUrl}/${locale}/services/geo`;
   return {
-    title: t.pages.geo.hero.headline,
+    title: locale === 'de'
+      ? 'GEO – In KI-Antworten sichtbar werden'
+      : 'GEO – Get cited by AI answers',
     description: t.pages.geo.hero.subtext,
     alternates: { canonical: canonicalUrl },
     openGraph: { url: canonicalUrl },
@@ -50,7 +57,7 @@ export default async function GeoPage({
           </Button>
           <FadeIn delay={100}>
             <div className="flex flex-col gap-5 max-w-2xl">
-              <Badge variant="light">{p.hero.badge}</Badge>
+              <Eyebrow>{p.hero.badge}</Eyebrow>
               <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
                 <span className="block text-white">{p.hero.headline}</span>
                 <span className="block bg-gradient-to-r from-emerald-300 to-teal-300 bg-clip-text text-transparent">
@@ -66,84 +73,47 @@ export default async function GeoPage({
       </section>
 
       {/* ── The Shift ────────────────────────────────────── */}
-      <section className="bg-white py-24">
-        <Container>
-          <FadeIn>
-            <div className="mx-auto max-w-3xl flex flex-col gap-6">
-              <Badge>{p.shift.eyebrow}</Badge>
-              <h2 className="text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl">
-                {p.shift.headline.split('\n').map((line, i) => (
-                  <span key={i} className="block">
-                    {line}
-                  </span>
-                ))}
-              </h2>
-              <p className="text-base leading-relaxed text-zinc-600">{p.shift.body}</p>
-            </div>
-          </FadeIn>
-        </Container>
-      </section>
+      <GeoShift
+        eyebrow={p.shift.eyebrow}
+        headline={p.shift.headline}
+        body={p.shift.body}
+      />
 
       {/* ── Demo ─────────────────────────────────────────── */}
       <section className="relative overflow-hidden bg-zinc-950 py-24 dot-grid">
-        <Container>
+        {/* subtle ambient glow behind demo */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute left-1/2 top-1/2 h-[400px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-600/[0.06] blur-[80px]"
+        />
+        <Container className="relative">
           <FadeIn>
             <div className="flex flex-col items-center gap-4 text-center mb-14">
-              <Badge variant="light">{p.demo.eyebrow}</Badge>
+              <div className="mx-auto w-fit">
+                <Eyebrow>{p.demo.eyebrow}</Eyebrow>
+              </div>
               <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
                 {p.demo.headline}
               </h2>
-              <p className="text-sm text-zinc-500">{p.demo.note}</p>
+              <p className="text-sm text-zinc-500 max-w-sm">{p.demo.note}</p>
             </div>
           </FadeIn>
-          <div className="mx-auto max-w-2xl flex flex-col gap-8">
-            {p.demo.queries.map((query, i) => {
-              const parts = query.ai.split(query.highlight);
-              return (
-                <FadeIn key={i} delay={i * 120}>
-                  <div className="flex flex-col gap-3">
-                    {/* User bubble */}
-                    <div className="flex justify-end">
-                      <div className="max-w-[80%] rounded-2xl rounded-tr-sm bg-zinc-800 px-4 py-3">
-                        <p className="text-sm text-zinc-200">{query.user}</p>
-                      </div>
-                    </div>
-                    {/* AI response bubble */}
-                    <div className="flex justify-start">
-                      <div className="max-w-[85%] rounded-2xl rounded-tl-sm border border-emerald-500/20 bg-zinc-900 px-4 py-3">
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="flex h-2 w-2 rounded-full bg-emerald-400" />
-                          <span className="text-xs font-medium text-emerald-400">{p.demo.aiLabel}</span>
-                        </div>
-                        <p className="text-sm leading-relaxed text-zinc-400">
-                          {parts.map((part, pi) => (
-                            <span key={pi}>
-                              {part}
-                              {pi < parts.length - 1 && (
-                                <span className="rounded-sm bg-emerald-500/20 px-1 py-0.5 font-semibold text-emerald-300">
-                                  {query.highlight}
-                                </span>
-                              )}
-                            </span>
-                          ))}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </FadeIn>
-              );
-            })}
 
+          {/* Animated chat demo */}
+          <div className="mx-auto max-w-2xl">
+            <GeoDemo queries={p.demo.queries} aiLabel={p.demo.aiLabel} />
           </div>
         </Container>
       </section>
 
       {/* ── Services ─────────────────────────────────────── */}
-      <section className="bg-zinc-900 py-24">
+      <section className="bg-zinc-900 py-24 dot-grid">
         <Container>
           <FadeIn>
-            <div className="flex flex-col gap-4 mb-12">
-              <Badge variant="light">{p.what.eyebrow}</Badge>
+            <div className="flex flex-col items-center text-center gap-4 mb-12">
+              <div className="mx-auto w-fit">
+                <Eyebrow>{p.what.eyebrow}</Eyebrow>
+              </div>
               <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
                 {p.what.headline}
               </h2>
@@ -151,79 +121,64 @@ export default async function GeoPage({
           </FadeIn>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             {p.what.services.map((service, i) => (
-              <FadeIn key={service.title} delay={i * 80}>
-                <div className="flex flex-col gap-3 rounded-2xl border border-zinc-800 bg-zinc-950 p-6 h-full">
-                  <h3 className="text-base font-semibold text-white">{service.title}</h3>
-                  <p className="text-sm leading-relaxed text-zinc-400">{service.body}</p>
-                </div>
+              <FadeIn key={service.title} delay={i * 80} className="h-full">
+                <GeoServiceCard
+                  number={String(i + 1).padStart(2, '0')}
+                  title={service.title}
+                  body={service.body}
+                />
               </FadeIn>
             ))}
           </div>
         </Container>
       </section>
 
-      {/* ── Urgency ──────────────────────────────────────── */}
-      <section className="bg-zinc-950 py-24">
+      {/* ── Pricing ──────────────────────────────────────── */}
+      <section className="bg-zinc-950 py-24 border-t border-zinc-800/60">
         <Container>
           <FadeIn>
-            <div className="flex flex-col gap-4 mb-14 max-w-2xl">
-              <Badge variant="light">{p.urgency.eyebrow}</Badge>
+            <div className="flex flex-col items-center gap-4 text-center mb-14">
+              <div className="mx-auto w-fit">
+                <Eyebrow>{p.pricing.eyebrow}</Eyebrow>
+              </div>
+              <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                {p.pricing.headline}
+              </h2>
+              <p className="text-sm text-zinc-500">{p.pricing.note}</p>
+            </div>
+          </FadeIn>
+        </Container>
+        {/* Wider wrapper so pricing cards use more horizontal space */}
+        <div className="mx-auto w-full max-w-7xl px-6">
+          <GeoPricing
+            packages={p.pricing.packages}
+            recommendedLabel={p.pricing.recommendedLabel}
+            locale={locale}
+          />
+        </div>
+      </section>
+
+      {/* ── Urgency ──────────────────────────────────────── */}
+      <section className="bg-zinc-950 py-24 border-t border-zinc-800/60">
+        <Container>
+          <FadeIn>
+            <div className="flex flex-col items-center text-center gap-4 mb-14">
+              <div className="mx-auto w-fit">
+                <Eyebrow>{p.urgency.eyebrow}</Eyebrow>
+              </div>
               <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
                 <span className="block bg-gradient-to-r from-emerald-300 to-teal-300 bg-clip-text text-transparent">
                   {p.urgency.headline}
                 </span>
               </h2>
-              <p className="text-base leading-relaxed text-zinc-400">{p.urgency.body}</p>
+              <p className="text-base leading-relaxed text-zinc-400 max-w-2xl">{p.urgency.body}</p>
             </div>
           </FadeIn>
 
-          {/* Stats */}
-          <div className="grid grid-cols-2 gap-6 mb-14 md:grid-cols-4">
-            {p.urgency.stats.map((stat, i) => (
-              <FadeIn key={stat.label} delay={i * 80}>
-                <div className="flex flex-col gap-1 rounded-2xl border border-zinc-800 bg-zinc-900 p-5">
-                  <span className="font-mono text-2xl font-bold text-emerald-400 sm:text-3xl">
-                    {stat.metric}
-                  </span>
-                  <span className="text-xs leading-snug text-zinc-500">{stat.label}</span>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
-
-          {/* Reason cards */}
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-            {p.urgency.points.map((point, i) => (
-              <FadeIn key={point.title} delay={i * 80}>
-                <div className="flex flex-col gap-3 rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6 h-full">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full border border-emerald-500/30 bg-emerald-500/10">
-                    <span className="text-xs font-bold text-emerald-400">{i + 1}</span>
-                  </div>
-                  <h3 className="text-sm font-semibold text-white">{point.title}</h3>
-                  <p className="text-sm leading-relaxed text-zinc-400">{point.body}</p>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
+          <GeoUrgency stats={p.urgency.stats} points={p.urgency.points} />
         </Container>
       </section>
 
-      {/* ── CTA ──────────────────────────────────────────── */}
-      <section className="bg-white py-24">
-        <Container>
-          <FadeIn>
-            <div className="mx-auto max-w-2xl flex flex-col items-center gap-6 text-center">
-              <h2 className="text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl">
-                {t.cta.headline}
-              </h2>
-              <p className="text-base leading-relaxed text-zinc-600">{t.cta.body}</p>
-              <Button href={`/${locale}/kontakt`} variant="secondary">
-                {t.cta.button}
-              </Button>
-            </div>
-          </FadeIn>
-        </Container>
-      </section>
     </>
   );
 }

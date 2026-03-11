@@ -108,6 +108,22 @@ export default async function KontaktPage({
                     </a>
                   </GlowCard>
 
+                  {/* WhatsApp */}
+                  <GlowCard className="flex flex-col gap-3 rounded-2xl border border-emerald-500/15 bg-white p-6 shadow-[0_0_0_1px_rgba(16,185,129,0.05),0_4px_20px_rgba(0,0,0,0.04)]">
+                    <p className="text-xs font-semibold uppercase tracking-widest text-zinc-400">
+                      WhatsApp
+                    </p>
+                    <a
+                      href="https://wa.me/35794550142"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group inline-flex items-center gap-1.5 text-base font-semibold text-emerald-600 transition-colors hover:text-emerald-500"
+                    >
+                      {t.footer.whatsappNumber}
+                      <span className="transition-transform group-hover:translate-x-0.5">→</span>
+                    </a>
+                  </GlowCard>
+
                   {/* Availability */}
                   <GlowCard className="flex flex-col gap-3 rounded-2xl border border-emerald-500/15 bg-white p-6 shadow-[0_0_0_1px_rgba(16,185,129,0.05),0_4px_20px_rgba(0,0,0,0.04)]">
                     <div className="flex items-center gap-2">

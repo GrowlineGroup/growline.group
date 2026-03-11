@@ -1,7 +1,7 @@
 import { Locale } from '@/i18n/config';
 import { getTranslations } from '@/i18n';
 import { Container } from '@/components/ui/Container';
-import { Badge } from '@/components/ui/Badge';
+import { Eyebrow } from '@/components/ui/Eyebrow';
 import { FadeIn } from '@/components/ui/FadeIn';
 
 interface Props {
@@ -30,7 +30,7 @@ export function Commitment({ locale }: Props) {
       <Container className="relative">
         <FadeIn>
           <div className="mb-14 flex flex-col items-center gap-4 text-center">
-            <Badge variant="light">{c.eyebrow}</Badge>
+            <Eyebrow>{c.eyebrow}</Eyebrow>
             <h2 className="max-w-lg text-3xl font-bold tracking-tight text-white sm:text-4xl">
               {c.headline.split('\n').map((line, i) => (
                 <span key={i} className={`block ${i === 1 ? 'text-emerald-400' : ''}`}>
@@ -47,7 +47,7 @@ export function Commitment({ locale }: Props) {
             <FadeIn key={point.title} delay={i * 80}>
               <div className="flex h-full flex-col gap-4 rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6 transition-all duration-300 hover:border-emerald-500/25 hover:bg-zinc-900 hover:shadow-[0_0_30px_rgba(16,185,129,0.06)]">
                 <div className="h-8 w-8 rounded-full border border-emerald-500/30 bg-emerald-500/10 flex items-center justify-center">
-                  <span className="h-2 w-2 rounded-full bg-emerald-400" />
+                  <span className="h-2 w-2 rounded-full bg-emerald-400 animate-glow-pulse" />
                 </div>
                 <div className="flex flex-col gap-2">
                   <h3 className="text-sm font-semibold text-white">{point.title}</h3>

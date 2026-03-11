@@ -1,7 +1,7 @@
 import { Locale } from '@/i18n/config';
 import { getTranslations } from '@/i18n';
 import { Container } from '@/components/ui/Container';
-import { Badge } from '@/components/ui/Badge';
+import { Eyebrow } from '@/components/ui/Eyebrow';
 import { FadeIn } from '@/components/ui/FadeIn';
 
 interface Props {
@@ -25,7 +25,7 @@ export function About({ locale }: Props) {
           {/* Left: text */}
           <FadeIn>
             <div className="flex flex-col gap-5">
-              <Badge>{a.eyebrow}</Badge>
+              <Eyebrow theme="light">{a.eyebrow}</Eyebrow>
               <h2 className="text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl">
                 {a.headline.split('\n').map((line, i) => (
                   <span key={i} className="block">
@@ -44,7 +44,7 @@ export function About({ locale }: Props) {
               <FadeIn key={value.title} delay={i * 100}>
                 <div className="group flex gap-4 rounded-2xl border border-zinc-100 bg-zinc-50 p-6 transition-all duration-300 hover:border-emerald-100 hover:shadow-md">
                   <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-500/15">
-                    <span className="h-2 w-2 rounded-full bg-emerald-500" />
+                    <span className="h-2 w-2 rounded-full bg-emerald-500 animate-glow-pulse" />
                   </div>
                   <div className="flex flex-col gap-1">
                     <h3 className="text-sm font-semibold text-zinc-900">{value.title}</h3>
