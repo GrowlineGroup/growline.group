@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/Button';
 import { FadeIn } from '@/components/ui/FadeIn';
 import { CssPricing } from '@/components/css/CssPricing';
 import { CssGridBeam } from '@/components/ui/CssGridBeam';
-import { BackgroundBeamsWithCollision } from '@/components/ui/BackgroundBeamsWithCollision';
+import { StarBackground } from '@/components/ui/StarBackground';
 import { baseUrl } from '@/lib/config';
 
 export async function generateMetadata({
@@ -126,9 +126,8 @@ export default async function CSSEntryPage({
 
 
       {/* ── Process ──────────────────────────────────────── */}
-      <section className="relative overflow-hidden py-24">
-        <BackgroundBeamsWithCollision className="absolute inset-0 opacity-40" />
-        <Container className="relative z-10">
+      <StarBackground className="py-24 bg-zinc-950">
+        <Container>
           <FadeIn>
             <div className="flex flex-col items-center gap-4 text-center mb-14">
               <div className="mx-auto w-fit">
@@ -143,12 +142,6 @@ export default async function CSSEntryPage({
             {p.process.steps.map((step, i) => (
               <FadeIn key={step.number} delay={i * 100}>
                 <div className="relative flex flex-col items-center text-center gap-4">
-                  {i < p.process.steps.length - 1 && (
-                    <div
-                      className="hidden md:block absolute top-6 left-full h-px bg-zinc-800 z-0"
-                      style={{ width: 'calc(100% - 2rem)', left: 'calc(100% + 1rem)' }}
-                    />
-                  )}
                   <div className="flex h-12 w-12 items-center justify-center rounded-full border border-emerald-500/30 bg-emerald-500/10 font-mono text-lg font-bold text-emerald-400">
                     {step.number}
                   </div>
@@ -159,7 +152,7 @@ export default async function CSSEntryPage({
             ))}
           </div>
         </Container>
-      </section>
+      </StarBackground>
     </div>
   );
 }
