@@ -17,9 +17,9 @@ interface GeoDemoProps {
 
 // [userAppears, thinkingAppears, responseAppears] in ms after viewport entry
 const TIMINGS: [number, number, number][] = [
-  [600,   1600,  4200],
-  [7500,  8800, 12000],
-  [16500, 18000, 22000],
+  [600,   1600,  4000],
+  [7000,  8200,  11700],
+  [14700, 15900, 19400],
 ];
 
 // Splits text into word tokens and one highlight token (no trailing spaces in highlight)
@@ -39,6 +39,7 @@ function buildTokens(text: string, highlight: string) {
 
 export function GeoDemo({ queries, aiLabel }: GeoDemoProps) {
   const [states, setStates] = useState<QueryState[]>(queries.map(() => 'idle'));
+  const [typingVisible, setTypingVisible] = useState<boolean[]>(queries.map(() => false));
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const started = useRef(false);
@@ -80,7 +81,14 @@ export function GeoDemo({ queries, aiLabel }: GeoDemoProps) {
               setTimeout(
                 () => setStates(prev => prev.map((s, idx) => (idx === i ? 'done' : s))),
                 t2
-              )
+              ),
+              // Show human typing indicator 1s after AI response, only for non-last queries
+              ...(i < queries.length - 1 ? [
+                setTimeout(
+                  () => setTypingVisible(prev => prev.map((v, idx) => (idx === i ? true : v))),
+                  t2 + 1000
+                ),
+              ] : [])
             );
           });
         }
@@ -173,6 +181,17 @@ export function GeoDemo({ queries, aiLabel }: GeoDemoProps) {
                         )
                       )}
                     </p>
+                  </div>
+                </div>
+              )}
+
+              {/* Human typing indicator — appears 1s after AI response, disappears when next query starts */}
+              {typingVisible[i] && states[i + 1] === 'idle' && (
+                <div className="flex justify-end animate-chat-enter">
+                  <div className="flex items-center gap-1.5 rounded-2xl rounded-tr-sm bg-zinc-700/50 px-4 py-3">
+                    <span className="h-1.5 w-1.5 rounded-full bg-zinc-400/70 animate-thinking-1" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-zinc-400/70 animate-thinking-2" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-zinc-400/70 animate-thinking-3" />
                   </div>
                 </div>
               )}

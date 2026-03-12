@@ -2,6 +2,7 @@
 
 import { useRef, useState, useCallback } from 'react';
 import { Eyebrow } from '@/components/ui/Eyebrow';
+import IsoLevelWarp from '@/components/ui/IsoLevelWarp';
 
 interface GeoShiftProps {
   eyebrow: string;
@@ -125,17 +126,14 @@ export function GeoShift({ eyebrow, headline, body }: GeoShiftProps) {
       ref={sectionRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative overflow-hidden bg-zinc-950 py-32 select-none"
+      className="relative overflow-hidden bg-zinc-950 py-48 select-none"
     >
       {/* Gradient fades top + bottom so edges blend into adjacent sections */}
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-zinc-950 to-transparent z-20" />
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-zinc-950 to-transparent z-20" />
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-zinc-950 to-transparent z-20" />
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-zinc-950 to-transparent z-20" />
 
-      {/* Ambient center glow */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute left-1/2 top-1/2 h-[500px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-600/[0.05] blur-[100px]"
-      />
+      {/* Animated topographic grid background */}
+      <IsoLevelWarp aria-hidden className="pointer-events-none" />
 
       {/* Floating AI logo chips */}
       {LOGOS.map((logo) => {
