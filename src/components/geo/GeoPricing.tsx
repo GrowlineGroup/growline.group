@@ -27,7 +27,7 @@ export function GeoPricing({ packages, recommendedLabel, locale }: GeoPricingPro
     <>
       {/* Mobile: pill tabs + single active card */}
       <div className="md:hidden">
-        <div className="flex gap-2 mb-8 flex-wrap">
+        <div className="flex gap-2 mb-8 flex-wrap justify-center">
           {packages.map((pkg, i) => (
             <button
               key={pkg.name}

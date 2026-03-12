@@ -115,6 +115,12 @@ export function CssGridBeam({ children }: { children: React.ReactNode }) {
             'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(9,9,11,0.97) 0%, rgba(9,9,11,0.92) 30%, rgba(9,9,11,0.6) 55%, transparent 78%)',
         }}
       />
+      {/* Mobile: stronger flat overlay so beams don't bleed through text */}
+      <div
+        aria-hidden
+        className="sm:hidden pointer-events-none absolute inset-0"
+        style={{ background: 'rgba(9,9,11,0.78)' }}
+      />
 
       {/* Section content */}
       <div className="relative z-10">{children}</div>

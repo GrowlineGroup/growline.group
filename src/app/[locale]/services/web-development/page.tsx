@@ -36,7 +36,7 @@ export default async function WebDevelopmentPage({
 
   return (
     <>
-      {/* ── Hero ─────────────────────────────────────────── */}
+      {/* ── 1. Hero ───────────────────────────────────────── */}
       <section className="relative overflow-hidden bg-zinc-950 pb-16 sm:pb-24 pt-16 dot-grid">
         <div
           aria-hidden
@@ -67,11 +67,11 @@ export default async function WebDevelopmentPage({
         </Container>
       </section>
 
-      {/* ── What we build ────────────────────────────────── */}
+      {/* ── 2. Was wir für dich bauen ────────────────────── */}
       <section className="bg-zinc-950 py-16 sm:py-24 dot-grid">
         <Container>
           <FadeIn>
-            <div className="flex flex-col gap-4 max-w-2xl mb-12">
+            <div className="flex flex-col items-center gap-4 text-center max-w-2xl mx-auto mb-12">
               <Eyebrow>{p.what.eyebrow}</Eyebrow>
               <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
                 {p.what.headline.split('\n').map((line, i) => (
@@ -83,19 +83,74 @@ export default async function WebDevelopmentPage({
               <p className="text-base leading-relaxed text-zinc-400">{p.what.body}</p>
             </div>
           </FadeIn>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {p.what.projects.map((project, i) => (
+              <FadeIn key={project.type} delay={i * 60}>
+                <div className="flex flex-col gap-3 rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6 h-full">
+                  <span className="text-base font-semibold text-white">{project.type}</span>
+                  <span className="text-sm leading-relaxed text-zinc-400">{project.desc}</span>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      {/* ── 3. Wie es abläuft ────────────────────────────── */}
+      <section className="relative overflow-hidden bg-zinc-900 py-16 sm:py-24">
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-zinc-950 to-transparent z-[1]" />
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-zinc-950 to-transparent z-[1]" />
+        <Container className="relative z-10">
+          <FadeIn>
+            <div className="flex flex-col items-center gap-4 text-center mb-14">
+              <Eyebrow>{p.process.eyebrow}</Eyebrow>
+              <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                {p.process.headline}
+              </h2>
+            </div>
+          </FadeIn>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {p.process.steps.map((step, i) => (
+              <FadeIn key={step.number} delay={i * 100}>
+                <div className="flex items-start gap-4">
+                  <span className="font-mono text-4xl font-bold leading-none text-emerald-500/40 shrink-0 pt-0.5">
+                    {step.number}
+                  </span>
+                  <div className="flex flex-col gap-2">
+                    <h3 className="text-base font-semibold text-white leading-snug min-h-[2.5rem] flex items-start">{step.title}</h3>
+                    <p className="text-sm leading-relaxed text-zinc-400">{step.body}</p>
+                  </div>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      {/* ── 4. Warum individuell / Bento ─────────────────── */}
+      <section className="bg-zinc-950 py-16 sm:py-24 dot-grid">
+        <Container>
+          <FadeIn>
+            <div className="flex flex-col items-center gap-4 text-center max-w-2xl mx-auto mb-12">
+              <Eyebrow>{p.why.eyebrow}</Eyebrow>
+              <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                {p.why.headline}
+              </h2>
+            </div>
+          </FadeIn>
           <FadeIn delay={100}>
             <BentoGrid items={p.bento} />
           </FadeIn>
         </Container>
       </section>
 
-      {/* ── Tech Stack ───────────────────────────────────── */}
+      {/* ── 5. Worauf du dich verlassen kannst ───────────── */}
       <section className="relative overflow-hidden bg-zinc-900 py-16 sm:py-24">
         <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-zinc-950 to-transparent z-[1]" />
         <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-zinc-950 to-transparent z-[1]" />
         <Container className="relative z-10">
           <FadeIn>
-            <div className="flex flex-col gap-4 max-w-2xl mb-12">
+            <div className="flex flex-col items-center gap-4 text-center max-w-2xl mx-auto mb-12">
               <Eyebrow>{p.tech.eyebrow}</Eyebrow>
               <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
                 {p.tech.headline.split('\n').map((line, i) => (
@@ -120,12 +175,12 @@ export default async function WebDevelopmentPage({
         </Container>
       </section>
 
-      {/* ── Performance Metrics ──────────────────────────── */}
+      {/* ── 6. Langsame Seiten kosten dich Kunden ────────── */}
       <section className="bg-zinc-950 py-16 sm:py-24 dot-grid">
         <Container>
-          <div className="flex flex-col gap-14 lg:flex-row lg:items-start lg:gap-24">
-            <FadeIn className="lg:max-w-sm lg:shrink-0">
-              <div className="flex flex-col gap-4">
+          <div className="flex flex-col items-center gap-12 text-center">
+            <FadeIn className="max-w-xl">
+              <div className="flex flex-col items-center gap-4">
                 <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
                   {p.performance.headline.split('\n').map((line, i) => (
                     <span key={i} className="block">
@@ -136,10 +191,10 @@ export default async function WebDevelopmentPage({
                 <p className="text-sm leading-relaxed text-zinc-500">{p.performance.note}</p>
               </div>
             </FadeIn>
-            <div className="grid grid-cols-2 gap-8 sm:gap-12">
+            <div className="grid grid-cols-2 gap-8 sm:grid-cols-4 sm:gap-12">
               {p.performance.points.map((point, i) => (
                 <FadeIn key={point.label} delay={i * 80}>
-                  <div className="flex flex-col gap-1">
+                  <div className="flex flex-col items-center gap-1">
                     <span className="font-mono text-4xl font-bold text-emerald-400 sm:text-5xl">
                       {point.metric}
                     </span>
@@ -152,7 +207,7 @@ export default async function WebDevelopmentPage({
         </Container>
       </section>
 
-      {/* ── Projects ─────────────────────────────────────── */}
+      {/* ── 7. Projekte ───────────────────────────────────── */}
       <section className="relative overflow-hidden bg-zinc-900 py-16 sm:py-24">
         <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-zinc-950 to-transparent z-[1]" />
         <Container className="relative z-10">

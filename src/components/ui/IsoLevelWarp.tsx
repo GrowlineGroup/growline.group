@@ -50,8 +50,9 @@ const IsoLevelWarp = ({
     };
 
     const handleMouseLeave = () => {
-      mouse.targetX = -2000;
-      mouse.targetY = -2000;
+      // Ease to canvas center so grid returns to rest smoothly
+      mouse.targetX = width / 2;
+      mouse.targetY = height / 2;
     };
 
     const draw = () => {
@@ -134,12 +135,6 @@ const IsoLevelWarp = ({
       {...props}
     >
       <canvas ref={canvasRef} className="block w-full h-full opacity-70" />
-      {/* Top fade */}
-      <div aria-hidden className="absolute inset-x-0 top-0 h-40 pointer-events-none" style={{ background: 'linear-gradient(to bottom, rgb(9,9,11) 0%, transparent 100%)' }} />
-      {/* Bottom fade */}
-      <div aria-hidden className="absolute inset-x-0 bottom-0 h-40 pointer-events-none" style={{ background: 'linear-gradient(to top, rgb(9,9,11) 0%, transparent 100%)' }} />
-      {/* Side vignette */}
-      <div aria-hidden className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 90% 100% at 50% 50%, transparent 40%, rgba(9,9,11,0.7) 100%)' }} />
     </div>
   );
 };

@@ -260,6 +260,14 @@ body {
   animation: gridMove 18s linear infinite;
 }
 
+/* GeoShift logo chip float animations — 6 unique paths */
+@keyframes geoFloat0 { 0%,100% { translate: 0px 0px; } 25% { translate: 9px -11px; } 60% { translate: -5px 8px; } }
+@keyframes geoFloat1 { 0%,100% { translate: 0px 0px; } 30% { translate: -11px 7px; } 65% { translate: 8px -9px; } }
+@keyframes geoFloat2 { 0%,100% { translate: 0px 0px; } 35% { translate: 7px 12px; } 70% { translate: -9px -5px; } }
+@keyframes geoFloat3 { 0%,100% { translate: 0px 0px; } 20% { translate: -8px -10px; } 55% { translate: 10px 6px; } }
+@keyframes geoFloat4 { 0%,100% { translate: 0px 0px; } 40% { translate: 12px -7px; } 75% { translate: -6px 10px; } }
+@keyframes geoFloat5 { 0%,100% { translate: 0px 0px; } 28% { translate: -10px 9px; } 62% { translate: 7px -12px; } }
+
 @utility no-scrollbar {
   scrollbar-width: none;
   -ms-overflow-style: none;

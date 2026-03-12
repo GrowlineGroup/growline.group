@@ -148,7 +148,7 @@ export default async function GeoPage({
 
       {/* ── Pricing ──────────────────────────────────────── */}
       <div className="relative z-[1]">
-        <DottedSurface className="bg-zinc-950 py-16 sm:py-24">
+        <DottedSurface className="py-16 sm:py-24">
           <Container>
             <FadeIn>
               <div className="flex flex-col items-center gap-4 text-center mb-10 sm:mb-14">
@@ -176,7 +176,7 @@ export default async function GeoPage({
 
       {/* ── Urgency ──────────────────────────────────────── */}
       <div className="relative z-[1]">
-        <WavyBackground waveOpacity={0.5} speed="slow" className="bg-zinc-950 py-16 sm:py-24">
+        <WavyBackground waveOpacity={0.5} speed="slow" className="py-16 sm:py-24">
           <Container>
             <FadeIn>
               <div className="flex flex-col items-center text-center gap-4 mb-10 sm:mb-14">
