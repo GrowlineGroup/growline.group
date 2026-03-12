@@ -10,6 +10,9 @@ import { GeoServiceCard } from '@/components/geo/GeoServiceCard';
 import { GeoPricing } from '@/components/geo/GeoPricing';
 import { GeoShift } from '@/components/geo/GeoShift';
 import { GeoUrgency } from '@/components/geo/GeoUrgency';
+import { StarBackground } from '@/components/ui/StarBackground';
+import { DottedSurface } from '@/components/ui/DottedSurface';
+import { WavyBackground } from '@/components/ui/WavyBackground';
 import { baseUrl } from '@/lib/config';
 
 export async function generateMetadata({
@@ -42,12 +45,12 @@ export default async function GeoPage({
   return (
     <>
       {/* ── Hero ─────────────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-zinc-950 pb-24 pt-16 dot-grid">
+      <StarBackground density={14000} interactive={false} opacity={0.4} className="bg-zinc-950 pb-24 pt-16 dot-grid overflow-hidden">
         <div
           aria-hidden
           className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-600/10 blur-[100px]"
         />
-        <Container className="relative flex flex-col gap-8">
+        <Container className="flex flex-col gap-8">
           <Button
             href={`/${locale}`}
             variant="ghost"
@@ -70,7 +73,7 @@ export default async function GeoPage({
             </div>
           </FadeIn>
         </Container>
-      </section>
+      </StarBackground>
 
       {/* ── The Shift ────────────────────────────────────── */}
       <GeoShift
@@ -80,13 +83,12 @@ export default async function GeoPage({
       />
 
       {/* ── Demo ─────────────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-zinc-950 py-24 dot-grid">
-        {/* subtle ambient glow behind demo */}
+      <StarBackground density={12000} interactive={false} opacity={0.35} className="bg-zinc-950 py-24 dot-grid overflow-hidden">
         <div
           aria-hidden
           className="pointer-events-none absolute left-1/2 top-1/2 h-[400px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-600/[0.06] blur-[80px]"
         />
-        <Container className="relative">
+        <Container>
           <FadeIn>
             <div className="flex flex-col items-center gap-4 text-center mb-14">
               <div className="mx-auto w-fit">
@@ -104,13 +106,12 @@ export default async function GeoPage({
             <GeoDemo queries={p.demo.queries} aiLabel={p.demo.aiLabel} />
           </div>
         </Container>
-      </section>
+      </StarBackground>
 
       {/* ── Services ─────────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-zinc-900 py-24 dot-grid">
-        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-zinc-950 to-transparent z-[1]" />
-        <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-zinc-950 to-transparent z-[1]" />
-        <Container className="relative z-10">
+      <div className="relative">
+        <StarBackground className="bg-zinc-950 py-40">
+          <Container>
           <FadeIn>
             <div className="flex flex-col items-center text-center gap-4 mb-12">
               <div className="mx-auto w-fit">
@@ -133,35 +134,42 @@ export default async function GeoPage({
             ))}
           </div>
         </Container>
-      </section>
+        </StarBackground>
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-zinc-950 to-transparent z-10" />
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-zinc-950 to-transparent z-10" />
+      </div>
 
       {/* ── Pricing ──────────────────────────────────────── */}
-      <section className="bg-zinc-950 py-24">
-        <Container>
-          <FadeIn>
-            <div className="flex flex-col items-center gap-4 text-center mb-14">
-              <div className="mx-auto w-fit">
-                <Eyebrow>{p.pricing.eyebrow}</Eyebrow>
+      <div className="relative">
+        <DottedSurface className="bg-zinc-950 py-24">
+          <Container>
+            <FadeIn>
+              <div className="flex flex-col items-center gap-4 text-center mb-14">
+                <div className="mx-auto w-fit">
+                  <Eyebrow>{p.pricing.eyebrow}</Eyebrow>
+                </div>
+                <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                  {p.pricing.headline}
+                </h2>
+                <p className="text-sm text-zinc-500">{p.pricing.note}</p>
               </div>
-              <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                {p.pricing.headline}
-              </h2>
-              <p className="text-sm text-zinc-500">{p.pricing.note}</p>
-            </div>
-          </FadeIn>
-        </Container>
-        {/* Wider wrapper so pricing cards use more horizontal space */}
-        <div className="mx-auto w-full max-w-7xl px-6">
-          <GeoPricing
-            packages={p.pricing.packages}
-            recommendedLabel={p.pricing.recommendedLabel}
-            locale={locale}
-          />
-        </div>
-      </section>
+            </FadeIn>
+          </Container>
+          {/* Wider wrapper so pricing cards use more horizontal space */}
+          <div className="mx-auto w-full max-w-7xl px-6">
+            <GeoPricing
+              packages={p.pricing.packages}
+              recommendedLabel={p.pricing.recommendedLabel}
+              locale={locale}
+            />
+          </div>
+        </DottedSurface>
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-zinc-950 to-transparent z-10" />
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-zinc-950 to-transparent z-10" />
+      </div>
 
       {/* ── Urgency ──────────────────────────────────────── */}
-      <section className="bg-zinc-950 py-24">
+      <WavyBackground waveOpacity={0.5} speed="slow" className="bg-zinc-950 py-24">
         <Container>
           <FadeIn>
             <div className="flex flex-col items-center text-center gap-4 mb-14">
@@ -179,7 +187,7 @@ export default async function GeoPage({
 
           <GeoUrgency stats={p.urgency.stats} points={p.urgency.points} />
         </Container>
-      </section>
+      </WavyBackground>
 
     </>
   );

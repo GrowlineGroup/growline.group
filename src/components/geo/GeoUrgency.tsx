@@ -33,7 +33,7 @@ export function GeoUrgency({ stats, points }: GeoUrgencyProps) {
               key={stat.label}
               onMouseEnter={() => setHoveredStat(i)}
               onMouseLeave={() => setHoveredStat(null)}
-              className="relative flex flex-col gap-2 rounded-2xl border bg-zinc-900 p-5 overflow-hidden cursor-default"
+              className="relative flex flex-col items-center gap-2 rounded-2xl border bg-zinc-900 p-5 overflow-hidden cursor-default text-center"
               style={{
                 transform: isActive ? 'scale(1.08)' : isOther ? 'scale(0.96)' : 'scale(1)',
                 transition: isActive
@@ -47,10 +47,10 @@ export function GeoUrgency({ stats, points }: GeoUrgencyProps) {
               }}
             >
               <div aria-hidden className="pointer-events-none absolute -top-6 -left-6 h-20 w-20 rounded-full bg-emerald-500/8 blur-xl" />
-              <span className="font-mono text-2xl font-bold text-emerald-400 sm:text-3xl">
+              <span className="font-mono text-2xl font-bold text-emerald-400 sm:text-3xl text-center">
                 {stat.metric}
               </span>
-              <span className="text-xs leading-snug text-zinc-500">{stat.label}</span>
+              <span className="text-xs leading-snug text-zinc-500 text-center">{stat.label}</span>
             </div>
           );
         })}
@@ -66,7 +66,7 @@ export function GeoUrgency({ stats, points }: GeoUrgencyProps) {
               key={point.title}
               onMouseEnter={() => setHoveredPoint(i)}
               onMouseLeave={() => setHoveredPoint(null)}
-              className="relative flex flex-col gap-3 rounded-2xl border bg-zinc-900 p-6 overflow-hidden cursor-default"
+              className="relative flex flex-col items-center gap-3 rounded-2xl border bg-zinc-900 p-6 overflow-hidden cursor-default text-center"
               style={{
                 transform: isActive ? 'scale(1.05)' : isOther ? 'scale(0.97)' : 'scale(1)',
                 transition: isActive
@@ -80,10 +80,7 @@ export function GeoUrgency({ stats, points }: GeoUrgencyProps) {
               }}
             >
               <div aria-hidden className="pointer-events-none absolute -top-10 -left-10 h-36 w-36 rounded-full bg-emerald-500/5 blur-2xl" />
-              <div className="absolute top-5 right-5 flex h-7 w-7 items-center justify-center rounded-full border border-emerald-500/30 bg-emerald-500/10">
-                <span className="text-xs font-bold text-emerald-400">{i + 1}</span>
-              </div>
-              <h3 className="text-sm font-semibold text-white pr-10">{point.title}</h3>
+              <h3 className="text-base font-semibold text-white">{point.title}</h3>
               <p className="text-sm leading-relaxed text-zinc-400">{point.body}</p>
             </div>
           );
