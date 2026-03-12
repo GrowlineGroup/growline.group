@@ -58,7 +58,7 @@ export function ServiceSection({ locale, serviceIndex }: Props) {
                 <Button
                   href={`/${locale}/${service.href}`}
                   variant="secondary"
-                  className="group border-zinc-700 text-zinc-300 transition-all duration-200 hover:border-emerald-500/40 hover:text-emerald-400"
+                  className="group border-zinc-600 text-white transition-all duration-200 hover:border-emerald-500/40 hover:text-emerald-400"
                 >
                   {service.ctaLabel}
                   <span className="ml-1 transition-transform duration-200 group-hover:translate-x-0.5">→</span>

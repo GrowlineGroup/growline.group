@@ -44,7 +44,7 @@ export default async function GeoPage({
   const p = t.pages.geo;
 
   return (
-    <div className="relative bg-zinc-950">
+    <div className="relative bg-transparent">
 
       {/* ── Globale Sterne über die gesamte Seite ─────────── */}
       <div className="absolute inset-0 pointer-events-none z-0">
@@ -142,8 +142,6 @@ export default async function GeoPage({
             </div>
           </Container>
         </StarBackground>
-        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-zinc-950 to-transparent z-10" />
-        <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-zinc-950 to-transparent z-10" />
       </div>
 
       {/* ── Pricing ──────────────────────────────────────── */}
@@ -170,8 +168,6 @@ export default async function GeoPage({
             />
           </div>
         </DottedSurface>
-        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-zinc-950 to-transparent z-10" />
-        <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-zinc-950 to-transparent z-10" />
       </div>
 
       {/* ── Urgency ──────────────────────────────────────── */}

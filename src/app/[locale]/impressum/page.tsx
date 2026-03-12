@@ -4,6 +4,7 @@ import { getTranslations } from '@/i18n';
 import { Container } from '@/components/ui/Container';
 import { FadeIn } from '@/components/ui/FadeIn';
 import { baseUrl } from '@/lib/config';
+import { PageStarCanvas } from '@/components/ui/PageStarCanvas';
 
 export async function generateMetadata({
   params,
@@ -30,9 +31,13 @@ export default async function ImpressumPage({
   const imp = t.imprint;
 
   return (
-    <>
+    <div className="relative bg-transparent">
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <PageStarCanvas />
+      </div>
+
       {/* ── Hero ─────────────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-zinc-950 pb-24 pt-16 dot-grid">
+      <section className="relative pb-24 pt-16 dot-grid z-[1]">
         <div
           aria-hidden
           className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-600/10 blur-[100px]"
@@ -47,7 +52,7 @@ export default async function ImpressumPage({
       </section>
 
       {/* ── Content ──────────────────────────────────────── */}
-      <section className="bg-white py-24">
+      <section className="bg-white py-24 z-[1] relative">
         <Container>
           <FadeIn>
             <div className="mx-auto max-w-2xl flex flex-col gap-12">
@@ -61,6 +66,6 @@ export default async function ImpressumPage({
           </FadeIn>
         </Container>
       </section>
-    </>
+    </div>
   );
 }

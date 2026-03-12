@@ -8,6 +8,7 @@ import { GlowCard } from '@/components/ui/GlowCard';
 import { SparklesCore } from '@/components/ui/SparklesCore';
 import { ContactForm } from '@/components/sections/ContactForm';
 import { baseUrl } from '@/lib/config';
+import { PageStarCanvas } from '@/components/ui/PageStarCanvas';
 
 export async function generateMetadata({
   params,
@@ -35,16 +36,22 @@ export default async function KontaktPage({
   const c = t.contact;
 
   return (
-    <>
+    <div className="relative bg-transparent">
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <PageStarCanvas />
+      </div>
+
       {/* ── Hero ─────────────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-zinc-950 pb-24 pt-16 dot-grid">
+      <section className="relative pb-24 pt-16 dot-grid z-[1]">
         {/* Ambient radial glow */}
         <div
           aria-hidden
           className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-600/10 blur-[100px]"
         />
         {/* Subtle sparkle canvas */}
-        <SparklesCore className="pointer-events-none absolute inset-0 h-full w-full opacity-70" />
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <SparklesCore className="pointer-events-none absolute inset-0 h-full w-full opacity-70" />
+        </div>
 
         <Container className="relative z-10 flex flex-col gap-8">
           <Button
@@ -84,7 +91,7 @@ export default async function KontaktPage({
       </section>
 
       {/* ── Form + Info ───────────────────────────────────── */}
-      <section className="bg-white pt-12 pb-20">
+      <section className="bg-white pt-12 pb-20 z-[1] relative">
         <Container>
           <div className="grid grid-cols-1 gap-8 sm:gap-12 lg:grid-cols-5 lg:gap-16">
 
@@ -163,6 +170,6 @@ export default async function KontaktPage({
           </div>
         </Container>
       </section>
-    </>
+    </div>
   );
 }

@@ -5,6 +5,7 @@ import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
 import { About } from '@/components/sections/About';
 import { baseUrl } from '@/lib/config';
+import { PageStarCanvas } from '@/components/ui/PageStarCanvas';
 
 export async function generateMetadata({
   params,
@@ -31,8 +32,11 @@ export default async function UeberUnsPage({
   const t = getTranslations(locale as Locale);
 
   return (
-    <>
-      <div className="bg-zinc-950 pt-10 pb-2">
+    <div className="relative bg-transparent">
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <PageStarCanvas />
+      </div>
+      <div className="pt-10 pb-2 z-[1] relative">
         <Container>
           <Button
             href={`/${locale}`}
@@ -43,7 +47,9 @@ export default async function UeberUnsPage({
           </Button>
         </Container>
       </div>
-      <About locale={locale as Locale} />
-    </>
+      <div className="z-[1] relative">
+        <About locale={locale as Locale} />
+      </div>
+    </div>
   );
 }

@@ -12,7 +12,7 @@ export function Footer({ locale }: Props) {
   const waNumber = t.footer.whatsappNumber.replace(/\s+/g, '').replace('+', '');
 
   return (
-    <footer className="bg-zinc-950">
+    <footer className="relative border-t border-zinc-800/50 bg-zinc-950/40 backdrop-blur-md">
       <Container className="py-12">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand + Contact */}

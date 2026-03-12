@@ -9,6 +9,7 @@ import { baseUrl } from '@/lib/config';
 import { LegalNoteLinks } from '@/components/gmc/LegalNoteLinks';
 import { DottedSurface } from '@/components/ui/DottedSurface';
 import { GmcPricing } from '@/components/google-merchant/GmcPricing';
+import { PageStarCanvas } from '@/components/ui/PageStarCanvas';
 
 export async function generateMetadata({
   params,
@@ -36,9 +37,13 @@ export default async function GoogleMerchantPage({
   const p = t.pages.googleMerchant;
 
   return (
-    <>
+    <div className="relative bg-transparent">
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <PageStarCanvas />
+      </div>
+
       {/* ── 1. Hero ───────────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-zinc-950 pb-24 pt-16 dot-grid">
+      <section className="relative pb-24 pt-16 dot-grid z-[1]">
         <div
           aria-hidden
           className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-600/10 blur-[100px]"
@@ -69,36 +74,36 @@ export default async function GoogleMerchantPage({
       </section>
 
       {/* ── 2. Nachweise / Evidence ───────────────────────── */}
-      <DottedSurface className="bg-zinc-950 py-16 sm:py-24">
-        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-zinc-950 to-transparent z-[2]" />
-        <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-zinc-950 to-transparent z-[2]" />
-        <Container className="relative z-10">
-          <FadeIn>
-            <div className="flex flex-col items-center gap-4 text-center mb-14">
-              <Eyebrow>{p.evidence.eyebrow}</Eyebrow>
-              <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                {p.evidence.headline}
-              </h2>
-            </div>
-          </FadeIn>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            {p.evidence.placeholders.map((ph, i) => (
-              <FadeIn key={ph.label} delay={i * 100}>
-                <div className="flex flex-col gap-4 rounded-2xl border border-zinc-800 bg-zinc-950 p-6">
-                  <div className="flex aspect-video w-full flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-zinc-700/60 bg-zinc-900/60">
-                    <span className="h-8 w-8 rounded-lg border border-zinc-700/60 bg-zinc-800/60" />
-                    <span className="px-4 text-center text-xs text-zinc-600">{ph.hint}</span>
+      <div className="z-[1] relative">
+        <DottedSurface className="bg-transparent py-16 sm:py-24">
+          <Container className="relative z-10">
+            <FadeIn>
+              <div className="flex flex-col items-center gap-4 text-center mb-14">
+                <Eyebrow>{p.evidence.eyebrow}</Eyebrow>
+                <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                  {p.evidence.headline}
+                </h2>
+              </div>
+            </FadeIn>
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+              {p.evidence.placeholders.map((ph, i) => (
+                <FadeIn key={ph.label} delay={i * 100}>
+                  <div className="flex flex-col gap-4 rounded-2xl border border-zinc-800 p-6">
+                    <div className="flex aspect-video w-full flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-zinc-700/60 bg-zinc-900/60">
+                      <span className="h-8 w-8 rounded-lg border border-zinc-700/60 bg-zinc-800/60" />
+                      <span className="px-4 text-center text-xs text-zinc-600">{ph.hint}</span>
+                    </div>
+                    <p className="text-sm font-medium text-center text-zinc-300">{ph.label}</p>
                   </div>
-                  <p className="text-sm font-medium text-center text-zinc-300">{ph.label}</p>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
-        </Container>
-      </DottedSurface>
+                </FadeIn>
+              ))}
+            </div>
+          </Container>
+        </DottedSurface>
+      </div>
 
       {/* ── 3. Pakete & Preise ────────────────────────────── */}
-      <section className="bg-zinc-950 py-16 sm:py-24 dot-grid">
+      <section className="relative py-16 sm:py-24 dot-grid z-[1]">
         <Container>
           <FadeIn>
             <div className="flex flex-col items-center gap-4 text-center mb-16">
@@ -128,7 +133,7 @@ export default async function GoogleMerchantPage({
       </section>
 
       {/* ── 4. Warum Growline Group ───────────────────────── */}
-      <section className="bg-zinc-950 py-16 sm:py-24">
+      <section className="relative py-16 sm:py-24 z-[1]">
         <Container>
           <FadeIn>
             <div className="mx-auto max-w-2xl flex flex-col items-center gap-8 text-center">
@@ -151,7 +156,7 @@ export default async function GoogleMerchantPage({
       </section>
 
       {/* ── 5. Unsere Herangehensweise ────────────────────── */}
-      <section className="relative overflow-hidden bg-zinc-950 py-16 sm:py-24 dot-grid">
+      <section className="relative py-16 sm:py-24 dot-grid z-[1]">
         <Container>
           <FadeIn>
             <div className="flex flex-col items-center gap-4 text-center mb-14">
@@ -178,7 +183,7 @@ export default async function GoogleMerchantPage({
       </section>
 
       {/* ── 6. Häufige Ursachen ───────────────────────────── */}
-      <section className="bg-zinc-950 py-20">
+      <section className="relative py-20 z-[1]">
         <Container>
           <FadeIn>
             <div className="flex flex-col items-center gap-4 text-center mb-12">
@@ -234,7 +239,7 @@ export default async function GoogleMerchantPage({
       </section>
 
       {/* ── 7. CTA ────────────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-zinc-950 py-16 sm:py-24">
+      <section className="relative py-16 sm:py-24 z-[1]">
         {/* deep radial glow */}
         <div aria-hidden className="pointer-events-none absolute inset-0"
           style={{ background: 'radial-gradient(ellipse 80% 60% at 50% 100%, rgba(16,185,129,0.12) 0%, transparent 70%)' }}
@@ -278,6 +283,6 @@ export default async function GoogleMerchantPage({
           </FadeIn>
         </Container>
       </section>
-    </>
+    </div>
   );
 }

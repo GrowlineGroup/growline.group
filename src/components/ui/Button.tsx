@@ -14,7 +14,7 @@ const variantStyles: Record<Variant, string> = {
   primary:
     'bg-zinc-900 text-white hover:bg-zinc-700 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100',
   secondary:
-    'border border-zinc-300 text-zinc-900 hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-50 dark:hover:bg-zinc-800',
+    'border border-zinc-600 text-white hover:border-zinc-500 hover:text-zinc-100',
   ghost:
     'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50',
 };
