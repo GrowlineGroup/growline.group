@@ -125,9 +125,9 @@ export function CssPricing({
 }
 
 const SIZES = [
-  { padding: 'p-12', priceText: 'text-6xl' },
-  { padding: 'p-12', priceText: 'text-6xl' },
-  { padding: 'p-12', priceText: 'text-6xl' },
+  { padding: 'p-6 sm:p-12', priceText: 'text-4xl sm:text-6xl' },
+  { padding: 'p-6 sm:p-12', priceText: 'text-4xl sm:text-6xl' },
+  { padding: 'p-6 sm:p-12', priceText: 'text-4xl sm:text-6xl' },
 ] as const;
 
 function CssTierCard({

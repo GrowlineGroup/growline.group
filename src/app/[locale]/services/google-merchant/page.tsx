@@ -68,7 +68,7 @@ export default async function GoogleMerchantPage({
       </section>
 
       {/* ── 2. Nachweise / Evidence ───────────────────────── */}
-      <DottedSurface className="bg-zinc-950 py-24">
+      <DottedSurface className="bg-zinc-950 py-16 sm:py-24">
         <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-zinc-950 to-transparent z-[2]" />
         <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-zinc-950 to-transparent z-[2]" />
         <Container className="relative z-10">
@@ -97,7 +97,7 @@ export default async function GoogleMerchantPage({
       </DottedSurface>
 
       {/* ── 3. Pakete & Preise ────────────────────────────── */}
-      <section className="bg-zinc-950 py-24 dot-grid">
+      <section className="bg-zinc-950 py-16 sm:py-24 dot-grid">
         <Container>
           <FadeIn>
             <div className="flex flex-col items-center gap-4 text-center mb-16">
@@ -197,7 +197,7 @@ export default async function GoogleMerchantPage({
       </section>
 
       {/* ── 4. Warum Growline Group ───────────────────────── */}
-      <section className="bg-zinc-950 py-24">
+      <section className="bg-zinc-950 py-16 sm:py-24">
         <Container>
           <FadeIn>
             <div className="mx-auto max-w-2xl flex flex-col items-center gap-8 text-center">
@@ -220,7 +220,7 @@ export default async function GoogleMerchantPage({
       </section>
 
       {/* ── 5. Unsere Herangehensweise ────────────────────── */}
-      <section className="relative overflow-hidden bg-zinc-950 py-24 dot-grid">
+      <section className="relative overflow-hidden bg-zinc-950 py-16 sm:py-24 dot-grid">
         <Container>
           <FadeIn>
             <div className="flex flex-col items-center gap-4 text-center mb-14">
@@ -230,7 +230,7 @@ export default async function GoogleMerchantPage({
               </h2>
             </div>
           </FadeIn>
-          <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-6 sm:gap-10 sm:grid-cols-2 lg:grid-cols-4">
             {p.process.steps.map((step, i) => (
               <FadeIn key={step.number} delay={i * 100}>
                 <div className="flex flex-col items-center gap-4 text-center">
@@ -260,7 +260,7 @@ export default async function GoogleMerchantPage({
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 items-stretch">
             {p.causes.items.map((item, i) => (
               <FadeIn key={item.title} delay={i * 80} className="h-full">
-                <div className="group relative flex flex-col justify-between gap-6 rounded-3xl border border-zinc-800/50 bg-gradient-to-b from-zinc-900/80 to-zinc-950 p-8 h-full overflow-hidden transition-all duration-500 hover:border-emerald-500/25 hover:shadow-[0_0_0_1px_rgba(16,185,129,0.08),0_20px_60px_rgba(0,0,0,0.5),0_0_80px_rgba(16,185,129,0.04)]">
+                <div className="group relative flex flex-col justify-between gap-6 rounded-3xl border border-zinc-800/50 bg-gradient-to-b from-zinc-900/80 to-zinc-950 p-5 sm:p-8 h-full overflow-hidden transition-all duration-500 hover:border-emerald-500/25 hover:shadow-[0_0_0_1px_rgba(16,185,129,0.08),0_20px_60px_rgba(0,0,0,0.5),0_0_80px_rgba(16,185,129,0.04)]">
 
                   {/* giant watermark number */}
                   <span
@@ -303,7 +303,7 @@ export default async function GoogleMerchantPage({
       </section>
 
       {/* ── 7. CTA ────────────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-zinc-950 py-24">
+      <section className="relative overflow-hidden bg-zinc-950 py-16 sm:py-24">
         {/* deep radial glow */}
         <div aria-hidden className="pointer-events-none absolute inset-0"
           style={{ background: 'radial-gradient(ellipse 80% 60% at 50% 100%, rgba(16,185,129,0.12) 0%, transparent 70%)' }}

@@ -26,7 +26,7 @@ export function BentoGrid({ items }: Props) {
           >
             {isMetric ? (
               <div className="flex h-full flex-col justify-between">
-                <span className="font-mono text-5xl font-bold text-emerald-400">{item.title}</span>
+                <span className="font-mono text-3xl sm:text-5xl font-bold text-emerald-400">{item.title}</span>
                 <span className="text-xs text-zinc-500">{item.body}</span>
               </div>
             ) : (

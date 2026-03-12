@@ -21,7 +21,7 @@ export function About({ locale }: Props) {
       />
 
       <Container>
-        <div className="grid gap-16 lg:grid-cols-2 lg:items-start">
+        <div className="grid gap-10 lg:gap-16 lg:grid-cols-2 lg:items-start">
           {/* Left: text */}
           <FadeIn>
             <div className="flex flex-col gap-5">

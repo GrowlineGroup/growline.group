@@ -38,7 +38,7 @@ export default async function CSSEntryPage({
   return (
     <div className="bg-zinc-950">
       {/* ── Hero ─────────────────────────────────────────── */}
-      <section className="relative overflow-hidden pb-24 pt-16 dot-grid">
+      <section className="relative overflow-hidden pb-16 sm:pb-24 pt-16 dot-grid">
         <div
           aria-hidden
           className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-600/10 blur-[100px]"
@@ -70,7 +70,7 @@ export default async function CSSEntryPage({
 
 
       {/* ── What is CSS Entry ─────────────────────────────── */}
-      <section className="relative py-24">
+      <section className="relative py-16 sm:py-24">
         <CssGridBeam>
           <Container>
             <FadeIn>
@@ -100,7 +100,7 @@ export default async function CSSEntryPage({
 
 
       {/* ── Pricing ──────────────────────────────────────── */}
-      <section className="relative overflow-hidden py-24 dot-grid">
+      <section className="relative overflow-hidden py-16 sm:py-24 dot-grid">
         <Container>
           <FadeIn>
             <div className="flex flex-col items-center gap-4 text-center mb-14">
@@ -126,7 +126,7 @@ export default async function CSSEntryPage({
 
 
       {/* ── Process ──────────────────────────────────────── */}
-      <StarBackground className="py-24 bg-zinc-950">
+      <StarBackground className="py-16 sm:py-24 bg-zinc-950">
         <Container>
           <FadeIn>
             <div className="flex flex-col items-center gap-4 text-center mb-14">
@@ -138,7 +138,7 @@ export default async function CSSEntryPage({
               </h2>
             </div>
           </FadeIn>
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
+          <div className="grid grid-cols-1 gap-6 md:gap-10 md:grid-cols-3">
             {p.process.steps.map((step, i) => (
               <FadeIn key={step.number} delay={i * 100}>
                 <div className="relative flex flex-col items-center text-center gap-4">

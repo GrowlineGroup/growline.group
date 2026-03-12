@@ -86,7 +86,7 @@ export default async function KontaktPage({
       {/* ── Form + Info ───────────────────────────────────── */}
       <section className="bg-white pt-12 pb-20">
         <Container>
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-5 lg:gap-16">
+          <div className="grid grid-cols-1 gap-8 sm:gap-12 lg:grid-cols-5 lg:gap-16">
 
             {/* ── Info cards — first in DOM = first on mobile
                 On desktop: explicit placement cols 4–5, row 1 */}

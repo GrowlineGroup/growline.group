@@ -80,7 +80,7 @@ function PricingCard({
   const scaleStyle = pkg.featured ? 'scale-[1.08] z-10' : '';
 
   return (
-    <div className={`relative flex flex-col gap-7 rounded-2xl p-10 h-full transition-all duration-300 ease-out ${cardStyle} ${scaleStyle}`}>
+    <div className={`relative flex flex-col gap-7 rounded-2xl p-5 sm:p-10 h-full transition-all duration-300 ease-out ${cardStyle} ${scaleStyle}`}>
       {pkg.featured && (
         <div className="absolute top-7 right-7 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-sm font-semibold text-emerald-400">
           {recommendedLabel}
@@ -90,7 +90,7 @@ function PricingCard({
       <div className="flex flex-col gap-3">
         <span className="text-xs font-semibold uppercase tracking-widest text-zinc-500">{pkg.name}</span>
         <div className="flex items-baseline gap-2">
-          <span className={`font-mono font-bold text-white ${pkg.featured ? 'text-6xl' : 'text-5xl'}`}>
+          <span className={`font-mono font-bold text-white ${pkg.featured ? 'text-4xl sm:text-6xl' : 'text-3xl sm:text-5xl'}`}>
             {pkg.price}
           </span>
           {pkg.per && <span className="text-sm text-zinc-500">{pkg.per}</span>}

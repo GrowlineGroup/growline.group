@@ -34,7 +34,7 @@ export function CTA({ locale }: Props) {
       />
 
       <Container className="relative flex flex-col items-center gap-6 text-center">
-        <h2 className="max-w-xl text-4xl font-bold tracking-tight text-white sm:text-5xl">
+        <h2 className="max-w-xl text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white">
           {t.cta.headline}
         </h2>
         <p className="max-w-md text-base leading-relaxed text-zinc-400">{t.cta.body}</p>

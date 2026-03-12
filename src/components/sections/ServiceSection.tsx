@@ -31,13 +31,13 @@ export function ServiceSection({ locale, serviceIndex }: Props) {
 
       <Container className="relative">
         <div
-          className={`grid items-center gap-16 lg:grid-cols-2 ${reversed ? 'lg:[&>*:first-child]:order-2' : ''}`}
+          className={`grid items-center gap-10 lg:gap-16 lg:grid-cols-2 ${reversed ? 'lg:[&>*:first-child]:order-2' : ''}`}
         >
           {/* Text */}
           <FadeIn>
             <div className="flex flex-col gap-6">
               <Eyebrow>{service.tileLabel}</Eyebrow>
-              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight sm:text-4xl">
                 <span className="block text-white">{service.headline}</span>
                 <span className="block bg-gradient-to-r from-emerald-300 to-teal-300 bg-clip-text text-transparent">
                   {service.headlineAccent}
@@ -69,7 +69,7 @@ export function ServiceSection({ locale, serviceIndex }: Props) {
 
           {/* Visual — differentiated per service */}
           <FadeIn delay={100} direction="up">
-            <div className="relative flex min-h-[280px] items-center justify-center">
+            <div className="relative flex min-h-[200px] sm:min-h-[280px] items-center justify-center">
 
               {/* Shared: main card always centered */}
               <div className="gradient-border relative z-10 flex h-36 w-36 items-center justify-center rounded-3xl bg-zinc-950 shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_20px_60px_rgba(0,0,0,0.5)]">

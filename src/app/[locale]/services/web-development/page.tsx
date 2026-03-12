@@ -37,7 +37,7 @@ export default async function WebDevelopmentPage({
   return (
     <>
       {/* ── Hero ─────────────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-zinc-950 pb-24 pt-16 dot-grid">
+      <section className="relative overflow-hidden bg-zinc-950 pb-16 sm:pb-24 pt-16 dot-grid">
         <div
           aria-hidden
           className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-600/10 blur-[100px]"
@@ -68,7 +68,7 @@ export default async function WebDevelopmentPage({
       </section>
 
       {/* ── What we build ────────────────────────────────── */}
-      <section className="bg-zinc-950 py-24 dot-grid">
+      <section className="bg-zinc-950 py-16 sm:py-24 dot-grid">
         <Container>
           <FadeIn>
             <div className="flex flex-col gap-4 max-w-2xl mb-12">
@@ -90,7 +90,7 @@ export default async function WebDevelopmentPage({
       </section>
 
       {/* ── Tech Stack ───────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-zinc-900 py-24">
+      <section className="relative overflow-hidden bg-zinc-900 py-16 sm:py-24">
         <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-zinc-950 to-transparent z-[1]" />
         <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-zinc-950 to-transparent z-[1]" />
         <Container className="relative z-10">
@@ -121,7 +121,7 @@ export default async function WebDevelopmentPage({
       </section>
 
       {/* ── Performance Metrics ──────────────────────────── */}
-      <section className="bg-zinc-950 py-24 dot-grid">
+      <section className="bg-zinc-950 py-16 sm:py-24 dot-grid">
         <Container>
           <div className="flex flex-col gap-14 lg:flex-row lg:items-start lg:gap-24">
             <FadeIn className="lg:max-w-sm lg:shrink-0">
@@ -153,7 +153,7 @@ export default async function WebDevelopmentPage({
       </section>
 
       {/* ── Projects ─────────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-zinc-900 py-24">
+      <section className="relative overflow-hidden bg-zinc-900 py-16 sm:py-24">
         <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-zinc-950 to-transparent z-[1]" />
         <Container className="relative z-10">
           <FadeIn>

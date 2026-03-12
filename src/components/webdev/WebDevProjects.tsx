@@ -48,7 +48,7 @@ export function WebDevProjects({ projects, eyebrow, headline, note }: WebDevProj
           <button
             onClick={prev}
             aria-label="Vorheriges Projekt"
-            className="absolute left-4 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full border border-zinc-700 bg-zinc-900/80 text-zinc-400 hover:border-zinc-500 hover:text-white transition-colors duration-200"
+            className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full border border-zinc-700 bg-zinc-900/80 text-zinc-400 hover:border-zinc-500 hover:text-white transition-colors duration-200"
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M10 12L6 8L10 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -66,7 +66,7 @@ export function WebDevProjects({ projects, eyebrow, headline, note }: WebDevProj
         </div>
 
         {/* Project info */}
-        <div className="flex items-start justify-between gap-6 px-8 py-7">
+        <div className="flex items-start justify-between gap-6 px-4 sm:px-8 py-5 sm:py-7">
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-3">
               <span className="text-base font-semibold text-white">{project.label}</span>

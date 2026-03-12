@@ -91,6 +91,16 @@ const LOGOS = [
   },
 ];
 
+// CSS animation name + duration per logo (pure CSS float, no JS state)
+const FLOAT_CSS: Record<string, { name: string; duration: string; delay: string }> = {
+  chatgpt:    { name: 'geoFloat0', duration: '6.2s',  delay: '0s'    },
+  gemini:     { name: 'geoFloat1', duration: '7.8s',  delay: '-2.1s' },
+  perplexity: { name: 'geoFloat2', duration: '6.9s',  delay: '-4.5s' },
+  claude:     { name: 'geoFloat3', duration: '8.3s',  delay: '-1.8s' },
+  copilot:    { name: 'geoFloat4', duration: '7.1s',  delay: '-3.3s' },
+  meta:       { name: 'geoFloat5', duration: '6.6s',  delay: '-5.0s' },
+};
+
 // Pre-defined scatter offsets per logo when any other logo is hovered.
 // Each entry: [scatterX, scatterY] in px — gives each logo a unique "jump" direction.
 const SCATTER: Record<string, [number, number]> = {
@@ -126,7 +136,7 @@ export function GeoShift({ eyebrow, headline, body }: GeoShiftProps) {
       ref={sectionRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative overflow-hidden bg-zinc-950 py-48 select-none"
+      className="relative overflow-hidden bg-zinc-950 py-32 sm:py-48 select-none"
     >
       {/* Gradient fades top + bottom so edges blend into adjacent sections */}
       <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-zinc-950 to-transparent z-20" />
@@ -148,6 +158,7 @@ export function GeoShift({ eyebrow, headline, body }: GeoShiftProps) {
         const [sx, sy] = isOtherHovered ? SCATTER[logo.id] : [0, 0];
 
         const scale = isHovered ? 1.28 : 1;
+        const anim = FLOAT_CSS[logo.id];
 
         return (
           <div
@@ -158,10 +169,13 @@ export function GeoShift({ eyebrow, headline, body }: GeoShiftProps) {
             style={{
               left: `${logo.pos.x}%`,
               top: `${logo.pos.y}%`,
+              animation: `${anim.name} ${anim.duration} ease-in-out ${anim.delay} infinite`,
               transform: `translate(${dx + sx}px, ${dy + sy}px) rotate(${logo.rotate}deg) scale(${scale})`,
               transition: isHovered
-                ? 'transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1)'
-                : 'transform 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
+                ? 'transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease'
+                : isOtherHovered
+                  ? 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease'
+                  : 'box-shadow 0.3s ease',
               borderColor: `${logo.color}30`,
               backgroundColor: isHovered ? `${logo.color}22` : `${logo.color}12`,
               boxShadow: isHovered
