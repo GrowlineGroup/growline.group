@@ -114,16 +114,6 @@ export function Hero({ locale }: Props) {
         />
       </Container>
 
-      {/* Scroll arrow — links to first service section */}
-      <div className="relative flex justify-center pb-10 pt-14">
-        <a
-          href="#css-entry"
-          aria-label="Zu den Leistungen scrollen"
-          className="flex h-8 w-8 items-center justify-center rounded-full border border-zinc-800 text-xs text-zinc-600 transition-colors duration-200 hover:border-zinc-600 hover:text-zinc-400 animate-scroll-bounce"
-        >
-          ↓
-        </a>
-      </div>
     </section>
   );
 }
