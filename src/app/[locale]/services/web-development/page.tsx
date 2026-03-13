@@ -202,8 +202,8 @@ export default async function WebDevelopmentPage({
             </div>
           </FadeIn>
           <div className="relative rounded-3xl border border-zinc-800/60 overflow-hidden p-8 sm:p-10">
-            <BorderBeam size={350} duration={14} colorFrom="#34d399" colorTo="transparent" delay={4} />
             <BorderBeam size={250} duration={14} colorFrom="transparent" colorTo="#a78bfa" delay={10} reverse />
+            <BorderBeam size={180} duration={22} colorFrom="transparent" colorTo="#34d399" delay={5} />
             <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
               {p.process.steps.map((step, i) => (
                 <FadeIn key={step.number} delay={i * 100}>

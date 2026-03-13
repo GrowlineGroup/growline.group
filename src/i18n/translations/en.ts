@@ -458,20 +458,7 @@ const en = {
       },
       legalNote: {
         eyebrow: 'Legal (draft)',
-        items: [
-          {
-            title: 'Privacy',
-            body: 'Client data is processed solely for project delivery. No sharing with third parties. Full privacy policy in preparation.',
-          },
-          {
-            title: 'Terms & Conditions',
-            body: 'Our T&Cs apply and will be provided upon contract conclusion. Currently in preparation.',
-          },
-          {
-            title: 'Contract details',
-            body: 'Scope, duration, and terms are agreed in writing before project start. No contract without prior diagnosis.',
-          },
-        ],
+        items: [],
       },
       cta: {
         headline: 'Merchant Center suspended?',

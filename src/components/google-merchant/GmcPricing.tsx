@@ -107,9 +107,6 @@ function GmcCard({
           <span className={`font-mono font-bold tracking-tight text-white ${isCustom ? 'text-2xl' : 'text-3xl sm:text-4xl'}`}>
             {pkg.price}
           </span>
-          {!isCustom && (
-            <span className="text-xs text-zinc-600">einmalig, zzgl. MwSt.</span>
-          )}
         </div>
 
         <div className="h-px bg-zinc-800/80" />

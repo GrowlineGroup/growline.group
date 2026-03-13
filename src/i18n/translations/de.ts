@@ -516,24 +516,11 @@ const de = {
             cta: 'Kontakt aufnehmen',
           },
         ],
-        note: 'Alle Preise zzgl. MwSt. · Finale Konditionen werden vor Projektstart schriftlich vereinbart.',
+        note: 'Monatlicher Retainer · Preise netto · EU-Unternehmen außerhalb Zyperns: Reverse Charge (0 % USt) · Finale Konditionen schriftlich vor Projektstart.',
       },
       legalNote: {
         eyebrow: 'Rechtliches (Rohfassung)',
-        items: [
-          {
-            title: 'Datenschutz',
-            body: 'Kundendaten werden ausschließlich zur Projektdurchführung verarbeitet. Keine Weitergabe an Dritte. Vollständige Datenschutzerklärung in Vorbereitung.',
-          },
-          {
-            title: 'AGB',
-            body: 'Es gelten unsere AGB, die mit Vertragsschluss übermittelt werden. Aktuell in Vorbereitung.',
-          },
-          {
-            title: 'Vertragsdetails',
-            body: 'Leistungsumfang, Laufzeit und Konditionen werden vor Projektstart schriftlich vereinbart. Kein Vertrag ohne vorherige Diagnose.',
-          },
-        ],
+        items: [],
       },
       cta: {
         headline: 'Merchant Center gesperrt?',

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 
 interface Item {
   title: string;
@@ -29,9 +30,9 @@ export function LegalNoteLinks({ items }: Props) {
         ))}
       </div>
 
-      {active && (
+      {active && createPortal(
         <div
-          className="fixed inset-0 z-50 flex items-end justify-center bg-black/70 backdrop-blur-sm p-4 sm:items-center"
+          className="fixed inset-0 z-[100] flex items-end justify-center bg-black/70 backdrop-blur-sm p-4 sm:items-center"
           onClick={() => setOpenIdx(null)}
         >
           <div
@@ -51,7 +52,8 @@ export function LegalNoteLinks({ items }: Props) {
             <h3 className="mb-4 text-sm font-semibold text-zinc-200">{active.title}</h3>
             <p className="text-sm leading-relaxed text-zinc-400">{active.body}</p>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );

@@ -7,6 +7,8 @@ import { Button } from '@/components/ui/Button';
 import { FadeIn } from '@/components/ui/FadeIn';
 import { baseUrl } from '@/lib/config';
 import { LegalNoteLinks } from '@/components/gmc/LegalNoteLinks';
+import { GmcContractModal } from '@/components/gmc/GmcContractModal';
+import { GmcAgbModal } from '@/components/gmc/GmcAgbModal';
 import { DottedSurface } from '@/components/ui/DottedSurface';
 import { GmcPricing } from '@/components/google-merchant/GmcPricing';
 import { PageStarCanvas } from '@/components/ui/PageStarCanvas';
@@ -122,11 +124,18 @@ export default async function GoogleMerchantPage({
 
           <FadeIn delay={300}>
             <div className="mt-10 hidden md:flex flex-col items-center gap-3 text-center">
-              <p className="text-xs text-zinc-600">{p.pricing.note}</p>
               <LegalNoteLinks items={p.legalNote.items} />
+              <div className="flex items-center gap-5">
+                <GmcAgbModal />
+                <GmcContractModal />
+              </div>
             </div>
             <div className="mt-4 md:hidden flex flex-col items-center gap-3 text-center">
               <LegalNoteLinks items={p.legalNote.items} />
+              <div className="flex items-center gap-5">
+                <GmcAgbModal />
+                <GmcContractModal />
+              </div>
             </div>
           </FadeIn>
         </Container>
