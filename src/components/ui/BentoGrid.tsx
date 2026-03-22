@@ -68,7 +68,13 @@ export function BentoGrid({ items, magic = false }: Props) {
               className={`${colSpan} relative flex flex-col rounded-2xl border border-zinc-800 bg-zinc-900 items-start justify-between p-6 min-h-36 overflow-hidden`}
             >
               {magic && (
-                <BorderBeam size={120} duration={10} colorFrom="#34d399" colorTo="transparent" reverse={item.id === 'perf'} />
+                <BorderBeam
+                  size={120}
+                  duration={10}
+                  colorFrom={item.id === 'perf' ? 'transparent' : '#34d399'}
+                  colorTo={item.id === 'perf' ? '#34d399' : 'transparent'}
+                  reverse={item.id === 'perf'}
+                />
               )}
               <span className="font-mono text-3xl sm:text-5xl font-bold text-emerald-400 leading-none">{item.title}</span>
               <span className="text-xs text-zinc-500 mt-2">{item.body}</span>
