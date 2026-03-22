@@ -80,10 +80,10 @@ export default async function LocaleLayout({
         <Header locale={typedLocale} />
         <main className="flex-1">{children}</main>
         {/* Global footer glow — gleich auf allen Seiten */}
-        <div aria-hidden className="pointer-events-none relative h-0">
+        <div aria-hidden className="pointer-events-none relative h-0 overflow-x-clip">
           <div className="absolute bottom-0 left-1/2 h-[320px] w-[900px] -translate-x-1/2 rounded-full bg-emerald-600/10 blur-[120px]" />
-          <div className="absolute bottom-0 right-0 h-[260px] w-[400px] translate-x-1/4 rounded-full bg-teal-500/7 blur-[100px]" />
-          <div className="absolute bottom-0 left-0 h-[220px] w-[350px] -translate-x-1/4 rounded-full bg-violet-600/6 blur-[100px]" />
+          <div className="absolute bottom-0 right-0 h-[260px] w-[400px] rounded-full bg-teal-500/7 blur-[100px]" />
+          <div className="absolute bottom-0 left-0 h-[220px] w-[350px] rounded-full bg-violet-600/6 blur-[100px]" />
         </div>
         <Footer locale={typedLocale} />
       </body>
