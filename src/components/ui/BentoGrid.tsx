@@ -1,3 +1,5 @@
+import { useMotionValue, useMotionTemplate, motion } from 'framer-motion';
+import { useCallback } from 'react';
 import { MagicCard } from '@/components/ui/magic-card';
 import { BorderBeam } from '@/components/ui/border-beam';
 
