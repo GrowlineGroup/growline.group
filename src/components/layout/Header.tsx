@@ -171,15 +171,9 @@ export function Header({ locale }: Props) {
 
         {/* ── Right side ──────────────────────────────────── */}
         <div className="flex items-center gap-4">
-          <LanguageSwitcher currentLocale={locale} />
-
-          {/* CTA desktop */}
-          <Link
-            href={`/${locale}/kontakt`}
-            className="hidden rounded-full bg-emerald-600 px-4 py-2 text-xs font-semibold text-white transition-colors duration-200 hover:bg-emerald-500 md:block shadow-[0_0_16px_rgba(16,185,129,0.25)]"
-          >
-            {t.nav.contact}
-          </Link>
+          <div className="hidden md:block">
+            <LanguageSwitcher currentLocale={locale} />
+          </div>
 
           {/* Mobile hamburger */}
           <button
@@ -261,16 +255,11 @@ export function Header({ locale }: Props) {
             {t.nav.contact}
           </MobileLink>
 
-          {/* CTA row */}
-          <div className="pt-3 pb-1 px-1">
-            <Link
-              href={`/${locale}/kontakt`}
-              onClick={() => setMobileOpen(false)}
-              className="flex w-full items-center justify-center rounded-full bg-emerald-600 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.2)]"
-            >
-              {t.nav.contact}
-            </Link>
+          {/* Language switcher */}
+          <div className="pt-2 pb-1 px-1 flex">
+            <LanguageSwitcher currentLocale={locale} />
           </div>
+
         </nav>
       </div>
     </header>

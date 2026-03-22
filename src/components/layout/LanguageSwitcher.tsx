@@ -16,22 +16,20 @@ export function LanguageSwitcher({ currentLocale }: Props) {
   }
 
   return (
-    <div className="flex items-center gap-1 text-sm font-medium">
-      {locales.map((locale, i) => (
-        <span key={locale} className="flex items-center gap-1">
-          {i > 0 && <span className="text-zinc-300 dark:text-zinc-600">|</span>}
-          <Link
-            href={getLocalePath(locale)}
-            aria-label={`Switch language to ${locale.toUpperCase()}`}
-            className={
-              locale === currentLocale
-                ? 'text-zinc-900 dark:text-zinc-50'
-                : 'text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50 transition-colors'
-            }
-          >
-            {locale.toUpperCase()}
-          </Link>
-        </span>
+    <div className="flex items-center rounded-full border border-zinc-700/50 bg-zinc-900/60 p-0.5 text-xs font-semibold backdrop-blur-md">
+      {locales.map((locale) => (
+        <Link
+          key={locale}
+          href={getLocalePath(locale)}
+          aria-label={`Switch language to ${locale.toUpperCase()}`}
+          className={
+            locale === currentLocale
+              ? 'rounded-full bg-emerald-600 px-2.5 py-1 text-white shadow-[0_0_8px_rgba(16,185,129,0.35)] transition-colors duration-200'
+              : 'rounded-full px-2.5 py-1 text-zinc-400 transition-colors duration-200 hover:text-zinc-100'
+          }
+        >
+          {locale.toUpperCase()}
+        </Link>
       ))}
     </div>
   );
