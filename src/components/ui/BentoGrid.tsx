@@ -107,15 +107,15 @@ export function BentoGrid({ items, magic = false }: Props) {
         // ── Large + Small tiles ──────────────────────────────
         if (magic) {
           return (
-            <div key={item.id} className={`${colSpan}`}>
+            <div key={item.id} className={`${colSpan} h-full`}>
               <MagicCard
-                className={`rounded-2xl w-full ${isLarge ? 'min-h-48' : 'min-h-40'}`}
+                className={`rounded-2xl w-full h-full ${isLarge ? 'min-h-48' : 'min-h-40'}`}
                 gradientColor="rgba(16,185,129,0.09)"
                 gradientFrom="#34d399"
                 gradientTo="#2dd4bf"
                 gradientSize={isLarge ? 280 : 180}
               >
-                <div className={`flex flex-col justify-between gap-3 p-6 ${isLarge ? 'min-h-48' : 'min-h-40'}`}>
+                <div className={`flex flex-col justify-between gap-3 p-6 h-full ${isLarge ? 'min-h-48' : 'min-h-40'}`}>
                   <p className={`font-semibold text-white leading-snug ${isLarge ? 'text-lg' : 'text-sm'}`}>{item.title}</p>
                   <p className="text-xs leading-relaxed text-zinc-500">{item.body}</p>
                 </div>
