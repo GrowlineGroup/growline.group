@@ -34,6 +34,8 @@ interface StarBackgroundProps {
   interactive?: boolean;
   /** Canvas opacity. Default 1 */
   opacity?: number;
+  /** Twinkle speed multiplier — lower = slower. Default 1 */
+  twinkleSpeed?: number;
 }
 
 export function StarBackground({
@@ -42,6 +44,7 @@ export function StarBackground({
   density = 2800,
   interactive = true,
   opacity = 1,
+  twinkleSpeed = 1,
 }: StarBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rafRef    = useRef<number>(0);
@@ -98,13 +101,14 @@ export function StarBackground({
     }
 
     let t = 0;
+    const tStep = 0.016 * twinkleSpeed;
     const REPEL_RADIUS = 90;
     const REPEL_FORCE  = 0.38;
     const FRICTION     = 0.88;
     const RETURN       = 0.06;
 
     const draw = () => {
-      t += 0.016;
+      t += tStep;
       const { width, height } = canvas;
       const mx = mouseRef.current.x;
       const my = mouseRef.current.y;
@@ -167,7 +171,7 @@ export function StarBackground({
       if (onMouseMove)  parent.removeEventListener('mousemove', onMouseMove);
       if (onMouseLeave) parent.removeEventListener('mouseleave', onMouseLeave);
     };
-  }, [density, interactive]);
+  }, [density, interactive, twinkleSpeed]);
 
   return (
     <div className={`relative ${className}`}>

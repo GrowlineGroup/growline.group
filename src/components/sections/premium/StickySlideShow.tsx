@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, Children, ReactNode } from 'react';
+import { useRef, Children, ReactNode, useEffect, useCallback, useState } from 'react';
 import { motion, useScroll, useTransform, MotionValue } from 'framer-motion';
 
 const HEADER_H = 72;
@@ -9,7 +9,7 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 // How much of total scroll each slide gets
 // slides.length × PER_SLIDE = 1.0 progress (the PER_SLIDE is 1/n)
 // OVERLAP: how much of each transition overlaps (fraction of a single slot)
-const OVERLAP = 0.35;
+const OVERLAP = 0.30;
 
 // ── Individual slide panel ────────────────────────────────────────────────────
 function Panel({
@@ -23,80 +23,55 @@ function Panel({
   index: number;
   total: number;
 }) {
+  const isFirst = index === 0;
+  const isLast  = index === total - 1;
   const per     = 1 / total;
   const start   = index * per;
   const end     = (index + 1) * per;
   const overlap = per * OVERLAP;
 
+  const keyframes = [
+    Math.max(0, start - overlap),
+    Math.min(1, start),
+    Math.max(0, end - overlap),
+    Math.min(1, end),
+  ].map(v => Math.max(0, Math.min(1, v)));
+
   // ── opacity ────────────────────────────────────────────────────────────────
   const opacity = useTransform(
     progress,
-    [
-      Math.max(0, start - overlap),  // entering: fade in starts
-      Math.min(1, start),            // fully visible
-      Math.max(0, end - overlap),    // fade out starts
-      Math.min(1, end),              // gone
-    ].map(v => Math.max(0, Math.min(1, v))),
-    index === 0
-      ? [1, 1, 1, 0]
-      : [0, 1, 1, 0],
+    keyframes,
+    isFirst ? [1, 1, 1, 0] : isLast ? [0, 1, 1, 1] : [0, 1, 1, 0],
   );
 
   // ── y ─────────────────────────────────────────────────────────────────────
   const y = useTransform(
     progress,
-    [
-      Math.max(0, start - overlap),
-      Math.min(1, start),
-      Math.max(0, end - overlap),
-      Math.min(1, end),
-    ].map(v => Math.max(0, Math.min(1, v))),
-    index === 0
-      ? ['0%', '0%', '0%', '-4%']
-      : ['5%', '0%', '0%', '-4%'],
+    keyframes,
+    isFirst ? ['0%', '0%', '0%', '-4%'] : isLast ? ['5%', '0%', '0%', '0%'] : ['5%', '0%', '0%', '-4%'],
   );
 
   // ── scale ──────────────────────────────────────────────────────────────────
   const scale = useTransform(
     progress,
-    [
-      Math.max(0, start - overlap),
-      Math.min(1, start),
-      Math.max(0, end - overlap),
-      Math.min(1, end),
-    ].map(v => Math.max(0, Math.min(1, v))),
-    index === 0
-      ? [1, 1, 1, 0.97]
-      : [0.97, 1, 1, 0.97],
+    keyframes,
+    isFirst ? [1, 1, 1, 0.97] : isLast ? [0.97, 1, 1, 1] : [0.97, 1, 1, 0.97],
   );
 
-  // ── blur ───────────────────────────────────────────────────────────────────
-  const blurPx = useTransform(
-    progress,
-    [
-      Math.max(0, start - overlap),
-      Math.min(1, start),
-      Math.max(0, end - overlap),
-      Math.min(1, end),
-    ].map(v => Math.max(0, Math.min(1, v))),
-    index === 0
-      ? [0, 0, 0, 10]
-      : [16, 0, 0, 10],
-  );
-
-  const filter = useTransform(blurPx, v => `blur(${v}px)`);
+  // Panels with opacity ≈ 0 get visibility:hidden → pauses canvas repaints
+  const visibility = useTransform(opacity, v => v < 0.02 ? 'hidden' : 'visible');
 
   return (
     <motion.div
-      style={{ opacity, y, scale, filter }}
-      className="absolute inset-0 will-change-transform"
+      style={{ opacity, y, scale, visibility }}
+      className="absolute inset-0 will-change-[transform,opacity]"
     >
       {children}
     </motion.div>
   );
 }
 
-// ── Progress dot ──────────────────────────────────────────────────────────────
+// ── Progress dot — imperative update avoids per-scroll useTransform overhead ──
 function Dot({
   progress,
   index,
@@ -108,60 +83,57 @@ function Dot({
   total: number;
   scrollTo: (i: number) => void;
 }) {
-  const per   = 1 / total;
-  const mid   = index * per + per / 2;
-  const band  = per * 0.5;
+  const ref = useRef<HTMLSpanElement>(null);
+  const per = 1 / total;
+  const mid = index * per + per / 2;
+  const band = per * 0.5;
 
-  const height  = useTransform(progress, [Math.max(0, mid - band), mid, Math.min(1, mid + band)], [6, 22, 6]);
-  const opacity = useTransform(progress, [Math.max(0, mid - band), mid, Math.min(1, mid + band)], [0.25, 1, 0.25]);
-  const bg      = useTransform(progress, [Math.max(0, mid - band), mid, Math.min(1, mid + band)], ['#52525b', '#34d399', '#52525b']);
+  useEffect(() => {
+    return progress.on('change', v => {
+      const el = ref.current;
+      if (!el) return;
+      const t = Math.max(0, Math.min(1, (v - (mid - band)) / (2 * band)));
+      const bell = t < 0.5 ? 2 * t : 2 * (1 - t);
+      el.style.height = `${6 + bell * 16}px`;
+      el.style.opacity = `${0.25 + bell * 0.75}`;
+      el.style.backgroundColor = bell > 0.5 ? '#34d399' : '#52525b';
+    });
+  }, [progress, mid, band]);
 
   return (
     <button
       onClick={() => scrollTo(index)}
       aria-label={`Slide ${index + 1}`}
-      className="flex items-center justify-center w-6 h-6 group"
+      className="flex items-center justify-center w-6 h-6"
     >
-      <motion.span
-        style={{ height, opacity, backgroundColor: bg }}
-        className="block w-[2px] rounded-full"
+      <span
+        ref={ref}
+        className="block w-[2px] rounded-full transition-none"
+        style={{ height: 6, opacity: 0.25, backgroundColor: '#52525b' }}
       />
     </button>
   );
 }
 
-// ── Counter ───────────────────────────────────────────────────────────────────
+// ── Counter — imperative to avoid extra MotionValue subscriptions ─────────────
 function Counter({ progress, total }: { progress: MotionValue<number>; total: number }) {
-  const cur = useTransform(progress, v => Math.min(total - 1, Math.floor(v * total)));
-  // Round to nearest integer for display
+  const [cur, setCur] = useState(0);
+  useEffect(() => {
+    return progress.on('change', v => {
+      setCur(Math.min(total - 1, Math.floor(v * total)));
+    });
+  }, [progress, total]);
+
   return (
     <div className="flex items-center gap-2.5">
-      <motion.span className="font-mono text-[11px] tabular-nums tracking-widest text-zinc-500">
-        {Array.from({ length: total }, (_, i) => (
-          <SlideCountNum key={i} progress={progress} index={i} total={total} />
-        ))}
-      </motion.span>
+      <span className="font-mono text-[11px] tabular-nums tracking-widest text-zinc-500">
+        {String(cur + 1).padStart(2, '0')}
+      </span>
       <span className="h-px w-6 bg-zinc-800" />
       <span className="font-mono text-[11px] text-zinc-800 tracking-widest">
         {String(total).padStart(2, '0')}
       </span>
     </div>
-  );
-}
-
-function SlideCountNum({ progress, index, total }: { progress: MotionValue<number>; index: number; total: number }) {
-  const per = 1 / total;
-  const mid = index * per + per / 2;
-  const band = per * 0.4;
-  const opacity = useTransform(
-    progress,
-    [Math.max(0, mid - band), mid, Math.min(1, mid + band)],
-    [0, 1, 0],
-  );
-  return (
-    <motion.span style={{ opacity }} className="absolute">
-      {String(index + 1).padStart(2, '0')}
-    </motion.span>
   );
 }
 
@@ -187,13 +159,53 @@ export function StickySlideShow({ children }: { children: ReactNode }) {
     offset: ['start start', 'end end'],
   });
 
-  // Scroll to a specific slide (for dot clicks)
-  const scrollTo = (index: number) => {
+  // Scroll to a specific slide
+  const scrollTo = useCallback((index: number) => {
     const el = trackerRef.current;
     if (!el) return;
     const target = el.offsetTop + (el.offsetHeight * index) / total;
     window.scrollTo({ top: target, behavior: 'smooth' });
-  };
+  }, [total]);
+
+  // Snap to nearest clean slide after scroll stops
+  const isSnapping = useRef(false);
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>;
+
+    const onScroll = () => {
+      if (isSnapping.current) return;
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        const el = trackerRef.current;
+        if (!el) return;
+
+        // Only snap when tracker is in view
+        const rect = el.getBoundingClientRect();
+        if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+
+        const progress = scrollYProgress.get();
+
+        // Don't snap at the very start or end — user is entering/leaving the tracker
+        if (progress <= 0.01 || progress >= 0.99) return;
+
+        const nearest = Math.min(total - 1, Math.round(progress * total));
+        const targetProgress = nearest / total;
+
+        // Skip if already close enough (within 1.5% of snap point)
+        if (Math.abs(progress - targetProgress) < 0.015) return;
+
+        isSnapping.current = true;
+        scrollTo(nearest);
+        setTimeout(() => { isSnapping.current = false; }, 900);
+      }, 220);
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      clearTimeout(timer);
+    };
+  }, [total, scrollYProgress, scrollTo]);
 
   return (
     <>
@@ -206,10 +218,10 @@ export function StickySlideShow({ children }: { children: ReactNode }) {
         {/* ── Fixed display → always fills viewport below header ─────────── */}
         <div
           className="sticky overflow-hidden"
-          style={{ top: HEADER_H, height: `calc(100vh - ${HEADER_H}px)` }}
+          style={{ top: HEADER_H, height: `calc(100vh - ${HEADER_H}px)`, transform: 'translateZ(0)' }}
         >
           {/* Slides stacked */}
-          <div className="relative h-full">
+          <div className="relative h-full" style={{ contain: 'strict' }}>
             {slides.map((slide, i) => (
               <Panel key={i} progress={scrollYProgress} index={i} total={total}>
                 {slide}

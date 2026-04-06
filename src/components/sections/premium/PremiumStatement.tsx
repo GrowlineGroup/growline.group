@@ -2,6 +2,8 @@
 
 import { motion } from 'framer-motion';
 import { BlurFade } from '@/components/ui/blur-fade';
+import { MagicCard } from '@/components/ui/magic-card';
+import { DottedSurface } from '@/components/ui/DottedSurface';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -31,17 +33,20 @@ export function PremiumStatement() {
   return (
     <section className="relative h-full bg-[#080808] flex items-center px-6 sm:px-10 lg:px-16 overflow-hidden">
 
-      {/* Subtle grid */}
+      {/* DottedSurface as decorative background */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+        <DottedSurface className="h-full w-full" />
+      </div>
+
+      {/* Radial vignette — keeps text readable */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.025]"
-        style={{
-          backgroundImage: 'linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)',
-          backgroundSize: '60px 60px',
-        }}
+        className="pointer-events-none absolute inset-0 z-[1]"
+        style={{ background: 'radial-gradient(ellipse 65% 65% at 50% 50%, transparent 20%, #080808 85%)' }}
       />
 
-      <div className="relative max-w-5xl mx-auto w-full py-16">
+      {/* Content */}
+      <div className="relative z-[2] max-w-5xl mx-auto w-full py-16">
 
         {/* Overline */}
         <BlurFade delay={0.05} duration={0.6} className="flex items-center gap-3 mb-12">
@@ -69,15 +74,22 @@ export function PremiumStatement() {
         </div>
 
         {/* Pillars */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 border-t border-zinc-800/50 pt-10">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 border-t border-zinc-800/50 pt-10">
           {PILLARS.map((p, i) => (
             <BlurFade key={p.label} delay={0.45 + i * 0.08} duration={0.65} direction="up" offset={12}>
-              <div className="flex flex-col gap-2.5">
-                <span className="font-mono text-[11px] tracking-[0.2em] text-emerald-500 uppercase">
-                  {p.label}
-                </span>
-                <p className="text-sm leading-relaxed text-zinc-500">{p.body}</p>
-              </div>
+              <MagicCard
+                className="rounded-xl"
+                gradientColor="#052e16"
+                gradientFrom="#065f46"
+                gradientTo="#064e3b"
+              >
+                <div className="flex flex-col gap-2.5 p-6">
+                  <span className="font-mono text-[11px] tracking-[0.2em] text-emerald-500 uppercase">
+                    {p.label}
+                  </span>
+                  <p className="text-sm leading-relaxed text-zinc-500">{p.body}</p>
+                </div>
+              </MagicCard>
             </BlurFade>
           ))}
         </div>
@@ -89,7 +101,7 @@ export function PremiumStatement() {
         animate={{ scaleX: 1 }}
         transition={{ duration: 1.4, ease: EASE, delay: 0.1 }}
         style={{ transformOrigin: 'left' }}
-        className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-zinc-800 to-transparent pointer-events-none"
+        className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-zinc-800 to-transparent pointer-events-none z-[2]"
       />
     </section>
   );
