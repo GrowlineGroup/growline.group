@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { Button } from '@/components/ui/Button';
+
+const PACKAGE_KEYS = ['starter', 'growth', 'custom'] as const;
 
 interface PricingPackage {
   name: string;
@@ -46,7 +47,7 @@ export function GeoPricing({ packages, recommendedLabel, locale }: GeoPricingPro
         {packages.map((pkg, i) =>
           i !== active ? null : (
             <div key={`${pkg.name}-${active}`} className="animate-chat-enter">
-              <PricingCard pkg={pkg} recommendedLabel={recommendedLabel} locale={locale} />
+              <PricingCard pkg={pkg} recommendedLabel={recommendedLabel} locale={locale} index={i} />
             </div>
           )
         )}
@@ -54,8 +55,8 @@ export function GeoPricing({ packages, recommendedLabel, locale }: GeoPricingPro
 
       {/* Desktop: 3-col grid */}
       <div className="hidden md:grid md:grid-cols-3 gap-6 items-start">
-        {packages.map(pkg => (
-          <PricingCard key={pkg.name} pkg={pkg} recommendedLabel={recommendedLabel} locale={locale} />
+        {packages.map((pkg, i) => (
+          <PricingCard key={pkg.name} pkg={pkg} recommendedLabel={recommendedLabel} locale={locale} index={i} />
         ))}
       </div>
     </>
@@ -66,11 +67,16 @@ function PricingCard({
   pkg,
   recommendedLabel,
   locale,
+  index,
 }: {
   pkg: PricingPackage;
   recommendedLabel: string;
   locale: string;
+  index: number;
 }) {
+  const [loading, setLoading] = useState(false);
+  const isCustom = index === 2;
+
   const cardStyle = pkg.featured
     ? 'gradient-border bg-zinc-950 shadow-[0_8px_40px_rgba(16,185,129,0.07)] hover:-translate-y-2 hover:shadow-[0_24px_64px_rgba(16,185,129,0.14)]'
     : !pkg.per
@@ -78,6 +84,30 @@ function PricingCard({
     : 'border border-zinc-800 bg-zinc-900/60 hover:border-zinc-700 hover:-translate-y-1 hover:shadow-[0_16px_48px_rgba(0,0,0,0.35)]';
 
   const scaleStyle = pkg.featured ? 'scale-[1.08] z-10' : '';
+
+  async function handleCheckout() {
+    if (isCustom) {
+      window.location.href = `/${locale}/kontakt`;
+      return;
+    }
+    setLoading(true);
+    try {
+      const res = await fetch('/api/checkout/geo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ package: PACKAGE_KEYS[index], locale }),
+      });
+      const data = await res.json();
+      if (data.checkoutUrl) {
+        window.location.href = data.checkoutUrl;
+      } else {
+        console.error('[checkout/geo]', data.error);
+        setLoading(false);
+      }
+    } catch {
+      setLoading(false);
+    }
+  }
 
   return (
     <div className={`relative flex flex-col gap-7 rounded-2xl p-5 sm:p-10 h-full transition-all duration-300 ease-out ${cardStyle} ${scaleStyle}`}>
@@ -119,9 +149,19 @@ function PricingCard({
         ))}
       </ul>
 
-      <Button href={`/${locale}/kontakt`} variant={pkg.featured ? 'primary' : 'secondary'} className="w-full justify-center">
-        {pkg.cta}
-      </Button>
+      <button
+        onClick={handleCheckout}
+        disabled={loading}
+        className={`w-full rounded-full px-6 py-3 text-sm font-semibold transition-all duration-200 ${
+          pkg.featured
+            ? 'bg-emerald-600 text-white hover:bg-emerald-500 shadow-[0_0_24px_rgba(16,185,129,0.3)]'
+            : 'border border-zinc-700 bg-zinc-800/60 text-zinc-300 hover:border-zinc-500 hover:text-white'
+        } ${loading ? 'opacity-60 cursor-wait' : ''}`}
+      >
+        {loading
+          ? (locale === 'de' ? 'Weiterleitung...' : 'Redirecting...')
+          : pkg.cta}
+      </button>
     </div>
   );
 }

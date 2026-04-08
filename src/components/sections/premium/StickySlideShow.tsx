@@ -1,15 +1,14 @@
 'use client';
 
-import { useRef, Children, ReactNode, useEffect, useCallback, useState } from 'react';
+import { useRef, useEffect, Children, ReactNode, useCallback, useState } from 'react';
 import { motion, useScroll, useTransform, MotionValue } from 'framer-motion';
 
 const HEADER_H = 72;
-const EASE = [0.22, 1, 0.36, 1] as const;
 
-// How much of total scroll each slide gets
-// slides.length × PER_SLIDE = 1.0 progress (the PER_SLIDE is 1/n)
-// OVERLAP: how much of each transition overlaps (fraction of a single slot)
-const OVERLAP = 0.30;
+// Fraction of each slide's slot that overlaps with the next transition
+const OVERLAP = 0.50;
+// Viewport-heights per slide (lower = less scrolling needed)
+const VH_PER_SLIDE = 50;
 
 // ── Individual slide panel ────────────────────────────────────────────────────
 function Panel({
@@ -37,25 +36,11 @@ function Panel({
     Math.min(1, end),
   ].map(v => Math.max(0, Math.min(1, v)));
 
-  // ── opacity ────────────────────────────────────────────────────────────────
+  // ── opacity — smooth crossfade ─────────────────────────────────────────────
   const opacity = useTransform(
     progress,
     keyframes,
     isFirst ? [1, 1, 1, 0] : isLast ? [0, 1, 1, 1] : [0, 1, 1, 0],
-  );
-
-  // ── y ─────────────────────────────────────────────────────────────────────
-  const y = useTransform(
-    progress,
-    keyframes,
-    isFirst ? ['0%', '0%', '0%', '-4%'] : isLast ? ['5%', '0%', '0%', '0%'] : ['5%', '0%', '0%', '-4%'],
-  );
-
-  // ── scale ──────────────────────────────────────────────────────────────────
-  const scale = useTransform(
-    progress,
-    keyframes,
-    isFirst ? [1, 1, 1, 0.97] : isLast ? [0.97, 1, 1, 1] : [0.97, 1, 1, 0.97],
   );
 
   // Panels with opacity ≈ 0 get visibility:hidden → pauses canvas repaints
@@ -63,8 +48,8 @@ function Panel({
 
   return (
     <motion.div
-      style={{ opacity, y, scale, visibility }}
-      className="absolute inset-0 will-change-[transform,opacity]"
+      style={{ opacity, visibility }}
+      className="absolute inset-0"
     >
       {children}
     </motion.div>
@@ -167,52 +152,12 @@ export function StickySlideShow({ children }: { children: ReactNode }) {
     window.scrollTo({ top: target, behavior: 'smooth' });
   }, [total]);
 
-  // Snap to nearest clean slide after scroll stops
-  const isSnapping = useRef(false);
-  useEffect(() => {
-    let timer: ReturnType<typeof setTimeout>;
-
-    const onScroll = () => {
-      if (isSnapping.current) return;
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        const el = trackerRef.current;
-        if (!el) return;
-
-        // Only snap when tracker is in view
-        const rect = el.getBoundingClientRect();
-        if (rect.bottom < 0 || rect.top > window.innerHeight) return;
-
-        const progress = scrollYProgress.get();
-
-        // Don't snap at the very start or end — user is entering/leaving the tracker
-        if (progress <= 0.01 || progress >= 0.99) return;
-
-        const nearest = Math.min(total - 1, Math.round(progress * total));
-        const targetProgress = nearest / total;
-
-        // Skip if already close enough (within 1.5% of snap point)
-        if (Math.abs(progress - targetProgress) < 0.015) return;
-
-        isSnapping.current = true;
-        scrollTo(nearest);
-        setTimeout(() => { isSnapping.current = false; }, 900);
-      }, 220);
-    };
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      clearTimeout(timer);
-    };
-  }, [total, scrollYProgress, scrollTo]);
-
   return (
     <>
       {/* ── Tracker in normal document flow → creates the scrollbar ─────── */}
       <div
         ref={trackerRef}
-        style={{ height: `${total * 100}vh` }}
+        style={{ height: `${total * VH_PER_SLIDE}vh` }}
         className="relative"
       >
         {/* ── Fixed display → always fills viewport below header ─────────── */}

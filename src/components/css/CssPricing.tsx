@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/Button';
 
+const PLAN_KEYS = ['beginner', 'pro', 'bundle'] as const;
+
 interface CssTier {
   name: string;
   badge: string;
@@ -143,6 +145,7 @@ function CssTierCard({
   locale: string;
   mobile?: boolean;
 }) {
+  const [loading, setLoading] = useState(false);
   const size = SIZES[index] ?? SIZES[0];
 
   const price = tier.custom
@@ -160,6 +163,36 @@ function CssTierCard({
     : !mobile
     ? 'hover:scale-[1.03] hover:z-10'
     : '';
+
+  async function handleCheckout() {
+    if (tier.custom) {
+      window.location.href = `/${locale}/kontakt`;
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const res = await fetch('/api/checkout/css', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          plan: PLAN_KEYS[index],
+          period: annual ? 'annual' : 'monthly',
+          locale,
+        }),
+      });
+
+      const data = await res.json();
+      if (data.checkoutUrl) {
+        window.location.href = data.checkoutUrl;
+      } else {
+        console.error('[checkout] No URL:', data.error);
+        setLoading(false);
+      }
+    } catch {
+      setLoading(false);
+    }
+  }
 
   return (
     <div className={`relative flex flex-col h-full rounded-2xl overflow-hidden transition-all duration-300 ease-out ${cardStyle} ${scaleStyle}`}>
@@ -211,13 +244,19 @@ function CssTierCard({
           ))}
         </ul>
 
-        <Button
-          href={`/${locale}/kontakt`}
-          variant={tier.featured ? 'primary' : 'secondary'}
-          className="w-full justify-center"
+        <button
+          onClick={handleCheckout}
+          disabled={loading}
+          className={`w-full rounded-full px-6 py-3 text-sm font-semibold transition-all duration-200 ${
+            tier.featured
+              ? 'bg-emerald-600 text-white hover:bg-emerald-500 shadow-[0_0_24px_rgba(16,185,129,0.3)]'
+              : 'border border-zinc-700 bg-zinc-800/60 text-zinc-300 hover:border-zinc-500 hover:text-white'
+          } ${loading ? 'opacity-60 cursor-wait' : ''}`}
         >
-          {tier.cta}
-        </Button>
+          {loading
+            ? (locale === 'de' ? 'Weiterleitung...' : 'Redirecting...')
+            : tier.cta}
+        </button>
       </div>
     </div>
   );

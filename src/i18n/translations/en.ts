@@ -426,7 +426,7 @@ const en = {
               'No re-suspension through active maintenance',
               'Shop setup support',
             ],
-            cta: 'Get in touch',
+            cta: 'Book now',
           },
           {
             name: 'Professional',
@@ -441,7 +441,7 @@ const en = {
               '15 % discount on further services',
               'Dedicated shop setup support',
             ],
-            cta: 'Get in touch',
+            cta: 'Book now',
           },
           {
             name: 'Custom',
@@ -659,9 +659,9 @@ const en = {
         headline: "What we've built.",
         note: 'Project details and references available on request.',
         placeholders: [
-          { label: 'Project 01', type: 'E-Commerce', hint: '[Screenshot / Preview placeholder]', tech: ['Next.js', 'Shopify', 'TypeScript'] },
-          { label: 'Project 02', type: 'Corporate website', hint: '[Screenshot / Preview placeholder]', tech: ['Next.js', 'Sanity CMS', 'Tailwind'] },
-          { label: 'Project 03', type: 'Web application', hint: '[Screenshot / Preview placeholder]', tech: ['Next.js', 'PostgreSQL', 'Auth.js'] },
+          { label: 'Growline Group', type: 'Corporate website', image: '/projects/growline-group.webp', url: 'https://growline.group', tech: ['Next.js 16', 'React 19', 'TypeScript', 'Tailwind CSS'] },
+          { label: 'Fiorora', type: 'Brand website', image: '/projects/fiorora.webp', url: 'https://fiorora.com', tech: ['Next.js', 'React', 'Tailwind CSS', 'Framer Motion'] },
+          { label: 'Alltags-Elfe', type: 'Service website', image: '/projects/alltags-elfe.webp', url: 'https://alltags-elfe.de', tech: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS'] },
         ],
       },
       performance: {

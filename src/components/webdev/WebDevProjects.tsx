@@ -6,8 +6,9 @@ import { Eyebrow } from '@/components/ui/Eyebrow';
 interface Project {
   label: string;
   type: string;
-  hint: string;
+  image: string;
   tech: string[];
+  url?: string;
 }
 
 interface WebDevProjectsProps {
@@ -15,6 +16,36 @@ interface WebDevProjectsProps {
   eyebrow: string;
   headline: string;
   note: string;
+}
+
+function ProjectPreview({ project }: { project: Project }) {
+  return (
+    <>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={project.image}
+        alt={`Screenshot von ${project.label}`}
+        loading="lazy"
+        decoding="async"
+        className="absolute inset-0 h-full w-full object-cover object-top"
+      />
+      {project.url && (
+        <a
+          href={project.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="absolute inset-0 z-10 flex items-center justify-center bg-black/0 opacity-0 hover:bg-black/40 hover:opacity-100 transition-all duration-300"
+        >
+          <span className="flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 px-4 py-2 text-sm font-medium text-white">
+            Live ansehen
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 3h7v7M13 3L5 11" />
+            </svg>
+          </span>
+        </a>
+      )}
+    </>
+  );
 }
 
 export function WebDevProjects({ projects, eyebrow, headline, note }: WebDevProjectsProps) {
@@ -42,13 +73,13 @@ export function WebDevProjects({ projects, eyebrow, headline, note }: WebDevProj
       {/* Main project card */}
       <div className="rounded-2xl border border-zinc-800 bg-zinc-900 overflow-hidden">
         {/* Preview area */}
-        <div className="relative aspect-[16/7] w-full flex items-center justify-center bg-zinc-950/80 border-b border-zinc-800">
-          <span className="text-xs text-zinc-700 text-center px-6">{project.hint}</span>
+        <div className="relative aspect-[16/7] w-full bg-zinc-950/80 border-b border-zinc-800 overflow-hidden">
+          <ProjectPreview key={active} project={project} />
           {/* Nav arrows */}
           <button
             onClick={prev}
             aria-label="Vorheriges Projekt"
-            className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full border border-zinc-700 bg-zinc-900/80 text-zinc-400 hover:border-zinc-500 hover:text-white transition-colors duration-200"
+            className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 flex h-9 w-9 items-center justify-center rounded-full border border-zinc-700 bg-zinc-900/80 text-zinc-400 hover:border-zinc-500 hover:text-white transition-colors duration-200"
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M10 12L6 8L10 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -57,7 +88,7 @@ export function WebDevProjects({ projects, eyebrow, headline, note }: WebDevProj
           <button
             onClick={next}
             aria-label="Nächstes Projekt"
-            className="absolute right-4 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full border border-zinc-700 bg-zinc-900/80 text-zinc-400 hover:border-zinc-500 hover:text-white transition-colors duration-200"
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 flex h-9 w-9 items-center justify-center rounded-full border border-zinc-700 bg-zinc-900/80 text-zinc-400 hover:border-zinc-500 hover:text-white transition-colors duration-200"
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M6 12L10 8L6 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -86,10 +117,24 @@ export function WebDevProjects({ projects, eyebrow, headline, note }: WebDevProj
             </div>
           </div>
 
-          {/* Counter */}
-          <span className="shrink-0 text-sm text-zinc-600 tabular-nums">
-            {active + 1} / {projects.length}
-          </span>
+          <div className="flex items-center gap-3 shrink-0">
+            {/* Visit link */}
+            {project.url && (
+              <a
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-zinc-700 bg-zinc-800/60 px-3 py-1.5 text-xs font-medium text-zinc-400 hover:border-emerald-500/40 hover:text-emerald-400 transition-colors duration-200"
+              >
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                Live
+              </a>
+            )}
+            {/* Counter */}
+            <span className="text-sm text-zinc-600 tabular-nums">
+              {active + 1} / {projects.length}
+            </span>
+          </div>
         </div>
       </div>
 
