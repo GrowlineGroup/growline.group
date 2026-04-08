@@ -99,9 +99,18 @@ const TAG_LABELS: Record<ContactTag, string> = {
   geo: 'GEO',
 };
 
+function esc(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 function row(label: string, value: string | undefined) {
   if (!value) return '';
-  return `<tr><td style="padding:4px 12px 4px 0;color:#71717a;font-size:13px;white-space:nowrap">${label}</td><td style="padding:4px 0;font-size:13px;color:#18181b">${value}</td></tr>`;
+  return `<tr><td style="padding:4px 12px 4px 0;color:#71717a;font-size:13px;white-space:nowrap">${esc(label)}</td><td style="padding:4px 0;font-size:13px;color:#18181b">${esc(value)}</td></tr>`;
 }
 
 function buildHtml(p: ContactPayload): string {
@@ -131,7 +140,7 @@ function buildHtml(p: ContactPayload): string {
       </table>
       <hr style="margin:20px 0;border:none;border-top:1px solid #e4e4e7"/>
       <p style="margin:0 0 6px;color:#71717a;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase">Nachricht</p>
-      <p style="margin:0;font-size:14px;color:#18181b;white-space:pre-wrap;line-height:1.6">${p.message.replace(/</g, '&lt;')}</p>
+      <p style="margin:0;font-size:14px;color:#18181b;white-space:pre-wrap;line-height:1.6">${esc(p.message)}</p>
     </div>
     <div style="padding:16px 32px;background:#f4f4f5;border-top:1px solid #e4e4e7">
       <p style="margin:0;font-size:11px;color:#a1a1aa">Gesendet über growline.group · DSGVO-konform</p>
@@ -141,9 +150,42 @@ function buildHtml(p: ContactPayload): string {
 </html>`;
 }
 
+// ── Rate Limiting (in-memory, per IP, 5 requests per minute) ─────────────────
+
+const rateMap = new Map<string, { count: number; resetAt: number }>();
+const RATE_LIMIT = 5;
+const RATE_WINDOW = 60_000;
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateMap.get(ip);
+  if (!entry || now > entry.resetAt) {
+    rateMap.set(ip, { count: 1, resetAt: now + RATE_WINDOW });
+    return false;
+  }
+  entry.count++;
+  return entry.count > RATE_LIMIT;
+}
+
 // ── Route Handler ─────────────────────────────────────────────────────────────
 
 export async function POST(request: NextRequest): Promise<NextResponse<ContactResponse>> {
+  // Origin check (CSRF protection)
+  const origin = request.headers.get('origin');
+  const allowedOrigins = [
+    'https://growline.group',
+    'https://www.growline.group',
+    ...(process.env.NODE_ENV === 'development' ? ['http://localhost:3000'] : []),
+  ];
+  if (origin && !allowedOrigins.includes(origin)) {
+    return NextResponse.json({ success: false, error: 'Forbidden' }, { status: 403 });
+  }
+
+  const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown';
+  if (isRateLimited(ip)) {
+    return NextResponse.json({ success: false, error: 'Too many requests' }, { status: 429 });
+  }
+
   try {
     const body: unknown = await request.json();
     const payload = validate(body);
@@ -169,7 +211,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<ContactRe
       from: `Growline Kontakt <${fromEmail}>`,
       to: [toEmail],
       replyTo: payload.email,
-      subject: `Neue Anfrage von ${payload.name}${payload.tags.length ? ` · ${tags}` : ''}`,
+      subject: `Neue Anfrage von ${payload.name.replace(/[<>"]/g, '')}${payload.tags.length ? ` · ${tags}` : ''}`,
       html: buildHtml(payload),
     });
 

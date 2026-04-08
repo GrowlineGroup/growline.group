@@ -12,6 +12,7 @@ import { GmcAgbModal } from '@/components/gmc/GmcAgbModal';
 import { DottedSurface } from '@/components/ui/DottedSurface';
 import { GmcPricing } from '@/components/google-merchant/GmcPricing';
 import { PageStarCanvas } from '@/components/ui/PageStarCanvas';
+import { serviceSchema, breadcrumbSchema, faqSchema, jsonLd } from '@/lib/schema';
 
 export async function generateMetadata({
   params,
@@ -24,8 +25,25 @@ export async function generateMetadata({
   return {
     title: t.pages.googleMerchant.hero.headline,
     description: t.pages.googleMerchant.hero.subtext,
-    alternates: { canonical: canonicalUrl },
-    openGraph: { url: canonicalUrl },
+    alternates: {
+      canonical: canonicalUrl,
+      languages: {
+        de: `${baseUrl}/de/services/google-merchant`,
+        en: `${baseUrl}/en/services/google-merchant`,
+        'x-default': `${baseUrl}/de/services/google-merchant`,
+      },
+    },
+    openGraph: {
+      url: canonicalUrl,
+      title: t.pages.googleMerchant.hero.headline + ' – ' + t.pages.googleMerchant.hero.headlineAccent,
+      description: t.pages.googleMerchant.hero.subtext,
+      siteName: 'Growline Group',
+    },
+    twitter: {
+      card: 'summary',
+      title: t.pages.googleMerchant.hero.headline,
+      description: t.pages.googleMerchant.hero.subtext,
+    },
   };
 }
 
@@ -38,8 +56,31 @@ export default async function GoogleMerchantPage({
   const t = getTranslations(locale as Locale);
   const p = t.pages.googleMerchant;
 
+  const gmcServiceLd = serviceSchema({
+    locale: locale as string,
+    name: p.hero.headline + ' ' + p.hero.headlineAccent,
+    description: p.hero.subtext,
+    path: '/services/google-merchant',
+  });
+
+  const gmcBreadcrumbLd = breadcrumbSchema([
+    { name: t.nav.home, url: `https://growline.group/${locale}` },
+    { name: t.nav.services, url: `https://growline.group/${locale}` },
+    { name: locale === 'de' ? 'GMC Entsperrung' : 'GMC Reinstatement', url: `https://growline.group/${locale}/services/google-merchant` },
+  ]);
+
+  const gmcFaqLd = faqSchema(
+    p.causes.items.map((item) => ({
+      question: item.title,
+      answer: item.body,
+    }))
+  );
+
   return (
     <div className="relative bg-transparent">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(gmcServiceLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(gmcBreadcrumbLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(gmcFaqLd) }} />
       <div className="absolute inset-0 pointer-events-none z-0">
         <PageStarCanvas />
       </div>

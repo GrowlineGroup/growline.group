@@ -14,6 +14,7 @@ import { BorderBeam } from '@/components/ui/border-beam';
 import { MagicCard } from '@/components/ui/magic-card';
 import { Meteors } from '@/components/ui/meteors';
 import { PageStarCanvas } from '@/components/ui/PageStarCanvas';
+import { serviceSchema, breadcrumbSchema, jsonLd } from '@/lib/schema';
 
 // ── Color palettes ────────────────────────────────────────────────────────────
 
@@ -65,8 +66,25 @@ export async function generateMetadata({
   return {
     title: t.pages.webDev.hero.headline,
     description: t.pages.webDev.hero.subtext,
-    alternates: { canonical: canonicalUrl },
-    openGraph: { url: canonicalUrl },
+    alternates: {
+      canonical: canonicalUrl,
+      languages: {
+        de: `${baseUrl}/de/services/web-development`,
+        en: `${baseUrl}/en/services/web-development`,
+        'x-default': `${baseUrl}/de/services/web-development`,
+      },
+    },
+    openGraph: {
+      url: canonicalUrl,
+      title: t.pages.webDev.hero.headline + ' – ' + t.pages.webDev.hero.headlineAccent,
+      description: t.pages.webDev.hero.subtext,
+      siteName: 'Growline Group',
+    },
+    twitter: {
+      card: 'summary',
+      title: t.pages.webDev.hero.headline,
+      description: t.pages.webDev.hero.subtext,
+    },
   };
 }
 
@@ -79,8 +97,23 @@ export default async function WebDevelopmentPage({
   const t = getTranslations(locale as Locale);
   const p = t.pages.webDev;
 
+  const webDevServiceLd = serviceSchema({
+    locale: locale as string,
+    name: p.hero.headline + ' ' + p.hero.headlineAccent,
+    description: p.hero.subtext,
+    path: '/services/web-development',
+  });
+
+  const webDevBreadcrumbLd = breadcrumbSchema([
+    { name: t.nav.home, url: `https://growline.group/${locale}` },
+    { name: t.nav.services, url: `https://growline.group/${locale}` },
+    { name: 'Web Development', url: `https://growline.group/${locale}/services/web-development` },
+  ]);
+
   return (
     <div className="relative bg-transparent">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(webDevServiceLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(webDevBreadcrumbLd) }} />
 
       {/* ── Stars — full page ─────────────────────────────── */}
       <div className="absolute inset-0 pointer-events-none z-0">

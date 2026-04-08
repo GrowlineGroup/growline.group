@@ -17,8 +17,15 @@ export async function generateMetadata({
     description: locale === 'de'
       ? 'Allgemeine Geschäftsbedingungen für den CSS-Entry-Dienst der Growline Group.'
       : 'Terms and Conditions for the CSS Entry service of Growline Group.',
-    alternates: { canonical: canonicalUrl },
-    openGraph: { url: canonicalUrl },
+    alternates: {
+      canonical: canonicalUrl,
+      languages: {
+        de: `${baseUrl}/de/agb/css-entry`,
+        en: `${baseUrl}/en/agb/css-entry`,
+        'x-default': `${baseUrl}/de/agb/css-entry`,
+      },
+    },
+    openGraph: { url: canonicalUrl, siteName: 'Growline Group' },
   };
 }
 

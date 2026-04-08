@@ -6,6 +6,12 @@ import { getTranslations } from '@/i18n';
 import { baseUrl } from '@/lib/config';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
+import {
+  organizationSchema,
+  websiteSchema,
+  professionalServiceSchema,
+  jsonLd,
+} from '@/lib/schema';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -55,12 +61,20 @@ export async function generateMetadata({
     },
     openGraph: {
       type: 'website',
-      locale,
+      locale: locale === 'de' ? 'de_DE' : 'en_US',
       url: canonicalUrl,
-      siteName: t.meta.title,
+      siteName: 'Growline Group',
       title: t.meta.title,
       description: t.meta.description,
     },
+    twitter: {
+      card: 'summary',
+      title: t.meta.title,
+      description: t.meta.description,
+    },
+    ...(process.env.GOOGLE_SITE_VERIFICATION
+      ? { verification: { google: process.env.GOOGLE_SITE_VERIFICATION } }
+      : {}),
   };
 }
 
@@ -76,6 +90,20 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} className="scroll-smooth">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: jsonLd(organizationSchema(locale)) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: jsonLd(websiteSchema()) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: jsonLd(professionalServiceSchema(locale)) }}
+        />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex min-h-screen flex-col bg-zinc-950`}>
         <Header locale={typedLocale} />
         <main className="flex-1">{children}</main>

@@ -9,6 +9,7 @@ import { SparklesCore } from '@/components/ui/SparklesCore';
 import { ContactForm } from '@/components/sections/ContactForm';
 import { baseUrl } from '@/lib/config';
 import { PageStarCanvas } from '@/components/ui/PageStarCanvas';
+import { breadcrumbSchema, jsonLd } from '@/lib/schema';
 
 export async function generateMetadata({
   params,
@@ -21,8 +22,25 @@ export async function generateMetadata({
   return {
     title: t.contact.headline,
     description: t.contact.subtext,
-    alternates: { canonical: canonicalUrl },
-    openGraph: { url: canonicalUrl },
+    alternates: {
+      canonical: canonicalUrl,
+      languages: {
+        de: `${baseUrl}/de/kontakt`,
+        en: `${baseUrl}/en/kontakt`,
+        'x-default': `${baseUrl}/de/kontakt`,
+      },
+    },
+    openGraph: {
+      url: canonicalUrl,
+      title: t.contact.headline,
+      description: t.contact.subtext,
+      siteName: 'Growline Group',
+    },
+    twitter: {
+      card: 'summary',
+      title: t.contact.headline,
+      description: t.contact.subtext,
+    },
   };
 }
 
@@ -35,8 +53,14 @@ export default async function KontaktPage({
   const t = getTranslations(locale as Locale);
   const c = t.contact;
 
+  const kontaktBreadcrumbLd = breadcrumbSchema([
+    { name: t.nav.home, url: `https://growline.group/${locale}` },
+    { name: t.nav.contact, url: `https://growline.group/${locale}/kontakt` },
+  ]);
+
   return (
     <div className="relative bg-transparent">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(kontaktBreadcrumbLd) }} />
       <div className="absolute inset-0 pointer-events-none z-0">
         <PageStarCanvas />
       </div>

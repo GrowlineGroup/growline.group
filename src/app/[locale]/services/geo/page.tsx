@@ -15,6 +15,7 @@ import { DottedSurface } from '@/components/ui/DottedSurface';
 import { WavyBackground } from '@/components/ui/WavyBackground';
 import { PageStarCanvas } from '@/components/ui/PageStarCanvas';
 import { baseUrl } from '@/lib/config';
+import { serviceSchema, breadcrumbSchema, faqSchema, jsonLd } from '@/lib/schema';
 
 export async function generateMetadata({
   params,
@@ -24,13 +25,31 @@ export async function generateMetadata({
   const { locale } = await params;
   const t = getTranslations(locale as Locale);
   const canonicalUrl = `${baseUrl}/${locale}/services/geo`;
+  const geoTitle = locale === 'de'
+    ? 'GEO – In KI-Antworten sichtbar werden'
+    : 'GEO – Get cited by AI answers';
   return {
-    title: locale === 'de'
-      ? 'GEO – In KI-Antworten sichtbar werden'
-      : 'GEO – Get cited by AI answers',
+    title: geoTitle,
     description: t.pages.geo.hero.subtext,
-    alternates: { canonical: canonicalUrl },
-    openGraph: { url: canonicalUrl },
+    alternates: {
+      canonical: canonicalUrl,
+      languages: {
+        de: `${baseUrl}/de/services/geo`,
+        en: `${baseUrl}/en/services/geo`,
+        'x-default': `${baseUrl}/de/services/geo`,
+      },
+    },
+    openGraph: {
+      url: canonicalUrl,
+      title: geoTitle,
+      description: t.pages.geo.hero.subtext,
+      siteName: 'Growline Group',
+    },
+    twitter: {
+      card: 'summary',
+      title: geoTitle,
+      description: t.pages.geo.hero.subtext,
+    },
   };
 }
 
@@ -43,8 +62,35 @@ export default async function GeoPage({
   const t = getTranslations(locale as Locale);
   const p = t.pages.geo;
 
+  const geoServiceLd = serviceSchema({
+    locale: locale as string,
+    name: locale === 'de' ? 'GEO – Generative Engine Optimization' : 'GEO – Generative Engine Optimization',
+    description: p.hero.subtext,
+    path: '/services/geo',
+  });
+
+  const geoBreadcrumbLd = breadcrumbSchema([
+    { name: t.nav.home, url: `https://growline.group/${locale}` },
+    { name: t.nav.services, url: `https://growline.group/${locale}` },
+    { name: 'GEO', url: `https://growline.group/${locale}/services/geo` },
+  ]);
+
+  const geoFaqLd = faqSchema([
+    {
+      question: locale === 'de' ? 'Was ist GEO (Generative Engine Optimization)?' : 'What is GEO (Generative Engine Optimization)?',
+      answer: p.shift.body,
+    },
+    {
+      question: locale === 'de' ? 'Warum sollte man jetzt mit GEO anfangen?' : 'Why should you start with GEO now?',
+      answer: p.urgency.body,
+    },
+  ]);
+
   return (
     <div className="relative bg-transparent">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(geoServiceLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(geoBreadcrumbLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(geoFaqLd) }} />
 
       {/* ── Globale Sterne über die gesamte Seite ─────────── */}
       <div className="absolute inset-0 pointer-events-none z-0">

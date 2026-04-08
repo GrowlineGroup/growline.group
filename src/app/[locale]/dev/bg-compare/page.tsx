@@ -1,4 +1,9 @@
+import type { Metadata } from 'next';
 import { PulseRings } from '@/components/ui/PulseRings';
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 import { NeuralNet } from '@/components/ui/NeuralNet';
 import { AuroraGlow } from '@/components/ui/AuroraGlow';
 import { CountdownGrid } from '@/components/ui/CountdownGrid';

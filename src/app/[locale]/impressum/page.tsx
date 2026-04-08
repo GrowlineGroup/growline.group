@@ -16,8 +16,18 @@ export async function generateMetadata({
   const canonicalUrl = `${baseUrl}/${locale}/impressum`;
   return {
     title: t.imprint.headline,
-    alternates: { canonical: canonicalUrl },
-    openGraph: { url: canonicalUrl },
+    description: locale === 'de'
+      ? 'Impressum der Growline Group LTD – Angaben gemäß § 5 DDG.'
+      : 'Legal notice of Growline Group LTD.',
+    alternates: {
+      canonical: canonicalUrl,
+      languages: {
+        de: `${baseUrl}/de/impressum`,
+        en: `${baseUrl}/en/impressum`,
+        'x-default': `${baseUrl}/de/impressum`,
+      },
+    },
+    openGraph: { url: canonicalUrl, siteName: 'Growline Group' },
   };
 }
 

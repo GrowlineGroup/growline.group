@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/Button';
 import { Commitment } from '@/components/sections/Commitment';
 import { baseUrl } from '@/lib/config';
 import { PageStarCanvas } from '@/components/ui/PageStarCanvas';
+import { breadcrumbSchema, jsonLd } from '@/lib/schema';
 
 export async function generateMetadata({
   params,
@@ -18,8 +19,25 @@ export async function generateMetadata({
   return {
     title: t.commitment.eyebrow,
     description: t.commitment.subtext,
-    alternates: { canonical: canonicalUrl },
-    openGraph: { url: canonicalUrl },
+    alternates: {
+      canonical: canonicalUrl,
+      languages: {
+        de: `${baseUrl}/de/commitment`,
+        en: `${baseUrl}/en/commitment`,
+        'x-default': `${baseUrl}/de/commitment`,
+      },
+    },
+    openGraph: {
+      url: canonicalUrl,
+      title: t.commitment.eyebrow + ' – Growline Group',
+      description: t.commitment.subtext,
+      siteName: 'Growline Group',
+    },
+    twitter: {
+      card: 'summary',
+      title: t.commitment.eyebrow,
+      description: t.commitment.subtext,
+    },
   };
 }
 
@@ -31,8 +49,14 @@ export default async function CommitmentPage({
   const { locale } = await params;
   const t = getTranslations(locale as Locale);
 
+  const commitBreadcrumbLd = breadcrumbSchema([
+    { name: t.nav.home, url: `https://growline.group/${locale}` },
+    { name: t.nav.commitment, url: `https://growline.group/${locale}/commitment` },
+  ]);
+
   return (
     <div className="relative bg-transparent">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(commitBreadcrumbLd) }} />
       <div className="absolute inset-0 pointer-events-none z-0">
         <PageStarCanvas />
       </div>

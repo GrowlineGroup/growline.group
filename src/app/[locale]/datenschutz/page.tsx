@@ -16,8 +16,18 @@ export async function generateMetadata({
   const canonicalUrl = `${baseUrl}/${locale}/datenschutz`;
   return {
     title: t.privacy.headline,
-    alternates: { canonical: canonicalUrl },
-    openGraph: { url: canonicalUrl },
+    description: locale === 'de'
+      ? 'Datenschutzerklärung der Growline Group LTD – Informationen zur Verarbeitung personenbezogener Daten.'
+      : 'Privacy policy of Growline Group LTD – Information on the processing of personal data.',
+    alternates: {
+      canonical: canonicalUrl,
+      languages: {
+        de: `${baseUrl}/de/datenschutz`,
+        en: `${baseUrl}/en/datenschutz`,
+        'x-default': `${baseUrl}/de/datenschutz`,
+      },
+    },
+    openGraph: { url: canonicalUrl, siteName: 'Growline Group' },
   };
 }
 

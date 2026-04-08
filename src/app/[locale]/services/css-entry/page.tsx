@@ -10,6 +10,7 @@ import { CssGridBeam } from '@/components/ui/CssGridBeam';
 import { StarBackground } from '@/components/ui/StarBackground';
 import { baseUrl } from '@/lib/config';
 import { PageStarCanvas } from '@/components/ui/PageStarCanvas';
+import { serviceSchema, breadcrumbSchema, faqSchema, jsonLd } from '@/lib/schema';
 
 export async function generateMetadata({
   params,
@@ -22,8 +23,25 @@ export async function generateMetadata({
   return {
     title: t.pages.cssEntry.hero.headline,
     description: t.pages.cssEntry.hero.subtext,
-    alternates: { canonical: canonicalUrl },
-    openGraph: { url: canonicalUrl },
+    alternates: {
+      canonical: canonicalUrl,
+      languages: {
+        de: `${baseUrl}/de/services/css-entry`,
+        en: `${baseUrl}/en/services/css-entry`,
+        'x-default': `${baseUrl}/de/services/css-entry`,
+      },
+    },
+    openGraph: {
+      url: canonicalUrl,
+      title: t.pages.cssEntry.hero.headline + ' – ' + t.pages.cssEntry.hero.headlineAccent,
+      description: t.pages.cssEntry.hero.subtext,
+      siteName: 'Growline Group',
+    },
+    twitter: {
+      card: 'summary',
+      title: t.pages.cssEntry.hero.headline,
+      description: t.pages.cssEntry.hero.subtext,
+    },
   };
 }
 
@@ -36,8 +54,37 @@ export default async function CSSEntryPage({
   const t = getTranslations(locale as Locale);
   const p = t.pages.cssEntry;
 
+  const cssServiceLd = serviceSchema({
+    locale: locale as string,
+    name: p.hero.headline + ' ' + p.hero.headlineAccent,
+    description: p.hero.subtext,
+    path: '/services/css-entry',
+  });
+
+  const cssBreadcrumbLd = breadcrumbSchema([
+    { name: t.nav.home, url: `https://growline.group/${locale}` },
+    { name: t.nav.services, url: `https://growline.group/${locale}` },
+    { name: 'CSS Entry', url: `https://growline.group/${locale}/services/css-entry` },
+  ]);
+
+  const cssFaqLd = faqSchema([
+    {
+      question: locale === 'de' ? 'Was ist CSS Entry?' : 'What is CSS Entry?',
+      answer: p.what.body,
+    },
+    {
+      question: locale === 'de' ? 'Wie viel spare ich mit CSS Entry?' : 'How much do I save with CSS Entry?',
+      answer: locale === 'de'
+        ? 'Als CSS-Partner erhalten Sie ca. 20 % niedrigere Klickpreise auf Google Shopping im Vergleich zum Standard-Kanal.'
+        : 'As a CSS partner, you get approximately 20% lower CPCs on Google Shopping compared to the standard channel.',
+    },
+  ]);
+
   return (
     <div className="relative bg-transparent">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(cssServiceLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(cssBreadcrumbLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(cssFaqLd) }} />
       <div className="absolute inset-0 pointer-events-none z-0">
         <PageStarCanvas />
       </div>
